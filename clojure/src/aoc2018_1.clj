@@ -16,3 +16,16 @@
 ;; 예) +3, +3, +4, -2, -4 는 10이 처음으로 두번 나오는 숫자임.
 ;; 0 -> 3 (+3) -> 6 (+3) -> 10(+4) -> 8(-2) -> 4(-4) -> 7(+3) -> 10(+3) -> ...
 
+
+(defn get-first-duplicated [trace value]
+  (if (contains? trace value)
+    (reduced value)
+    (conj trace value)))
+
+(->>
+ (slurp "./resources/aoc2018_1.txt")
+ (clojure.string/split-lines)
+ (map #(Integer/parseInt %))
+ cycle
+ (reductions +)
+ (reduce get-first-duplicated #{}))
