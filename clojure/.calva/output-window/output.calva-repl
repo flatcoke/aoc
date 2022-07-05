@@ -1364,3 +1364,26 @@ clj꞉aoc2018-1꞉> 
 ; Execution error (ArityException) at nrepl.middleware.interruptible-eval/evaluate$fn$fn (interruptible_eval.clj:87).
 ; Wrong number of args (3) passed to: clojure.core/for
 clj꞉aoc2018-1꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval8199$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clojure.lang.Compiler/load (Compiler.java:7665)
+aoc2018-1/eval8195 (NO_SOURCE_FILE:1)
+clojure.lang.Compiler/eval (Compiler.java:7194)
+clojure.core/eval (core.clj:3215)
+clojure.core/eval (core.clj:3211)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:87)
+clojure.core/apply (core.clj:667)
+clojure.core/with-bindings* (core.clj:1990)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:87)
+clojure.main/repl (main.clj:437)
+clojure.main/repl (main.clj:458)
+clojure.main/repl (main.clj:368)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:84)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:56)
+nrepl.middleware.interruptible-eval/interruptible-eval (interruptible_eval.clj:152)
+nrepl.middleware.session/session-exec (session.clj:218)
+nrepl.middleware.session/session-exec (session.clj:217)
+java.lang.Thread/run (Thread.java:833)
+clj꞉aoc2018-1꞉> 
