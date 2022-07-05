@@ -1,0 +1,1366 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+o o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; Starting Jack-in Terminal: clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"0.9.0"},cider/cider-nrepl {:mvn/version,"0.27.4"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]"
+; Jacking in...
+; Starting Jack-in Terminal: clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"0.9.0"},cider/cider-nrepl {:mvn/version,"0.27.4"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]"
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉>  ; Use `alt+enter` to evaluate
+; Jack-in done.
+clj꞉user꞉>
+; Syntax error compiling at (.calva/output-window/output.calva-repl:0:0).
+; Unable to resolve symbol: clj꞉user꞉> in this context
+clj꞉user꞉> 
+(+ 1 1)
+2
+clj꞉user꞉> 
+2
+clj꞉aoc2018-1꞉> 
+; Execution error (FileNotFoundException) at java.io.FileInputStream/open0 (FileInputStream.java:-2).
+; ../resources/aoc2018_1.txt (No such file or directory)
+clj꞉aoc2018-1꞉> 
+""
+clj꞉aoc2018-1꞉> 
+"-1\n-17\n-4\n-15\n-1\n+6\n-17\n+3\n-14\n-9\n-5\n+16\n+10\n+15\n+13\n+15\n+9\n+15\n+18\n-14\n+2\n+4\n-13\n-1\n+9\n-11\n+18\n+18\n-7\n+13\n-9\n+2\n-16\n+2\n+10\n-11\n+8\n-5\n-8\n-17\n+15\n+4\n+15\n-6\n+21\n+6\n-9\n+16\n+2\n+5\n-6\n+13\n-15\n+7\n+4\n-14\n-18\n+1\n+7\n-21\n-3\n+8\n+10\n+12\n-15\n-3\n+16\n+8\n+13\n+10\n+8\n+1\n+18\n+2\n-13\n-11\n+7\n+13\n+14\n-3\n-1\n-4\n+10\n+11\n+8\n+11\n-13\n+14\n+14\n-5\n-12\n-19\n-5\n+9\n+2\n-3\n+2\n-7\n+13\n+16\n+17\n+16\n+5\n+17\n-9\n-5\n+6\n+17\n-10\n+5\n-20\n-3\n-10\n-10\n+19\n+17\n+5\n-14\n+15\n-13\n+15\n+19\n+7\n-13\n-2\n-18\n+12\n+3\n-2\n+17\n-11\n-16\n-12\n-15\n+3\n+18\n-16\n-15\n-17\n-16\n-20\n+22\n-3\n+6\n+12\n+8\n-15\n+3\n+15\n+13\n-3\n-18\n-8\n+17\n-3\n+13\n-20\n+2\n+15\n-2\n-12\n+15\n+26\n+12\n+1\n+15\n+18\n+3\n-4\n+17\n+5\n+2\n-3\n+7\n+3\n+17\n+1\n-15\n+9\n+10\n-14\n+3\n-19\n-11\n-2\n+9\n-13\n-10\n-1\n-9\n+11\n-9\n-6\n-2\n+18\n+5\n+6\n-18\n+14\n-6\n+16\n-7\n-1\n+19\n+9\n+2\n+13\n+17\n+7\n-19\n+18\n+9\n-2\n+3\n+6\n+16\n-6\n+7\n-15\n+17\n-8\n-14\n-7\n+5\n-7\n+13\n+17\n+3\n-13\n+17\n-19\n+8\n+19\n+1\n+6\n-11\n+8\n+15\n-11\n+7\n-16\n-1\n-9\n+8\n-4\n-3\n-19\n+3\n+2\n-13\n-10\n-7\n-5\n-6\n+3\n+2\n+3\n+7\n-21\n-11\n+18\n+8\n+3\n-8\n-7\n+10\n-18\n-8\n+7\n-16\n-18\n+2\n-11\n+14\n+2\n+2\n+21\n-16\n+22\n-15\n+20\n+26\n-7\n+21\n+12\n+21\n-9\n-7\n-15\n-18\n+5\n-11\n-26\n+15\n+29\n-32\n-23\n+3\n-9\n+3\n-43\n-12\n-6\n-15\n-8\n-9\n-1\n-12\n-31\n-15\n+2\n-7\n+15\n+19\n-4\n+13\n+18\n-7\n-28\n-4\n+1\n-27\n-17\n+11\n-15\n-5\n+12\n+6\n+15\n+10\n-11\n-24\n+6\n-11\n+13\n+3\n+5\n-14\n-14\n-19\n-18\n+9\n-15\n+9\n+11\n+5\n+6\n+4\n+18\n-19\n+17\n-14\n+3\n+6\n-18\n+8\n+12\n-18\n-14\n-21\n+12\n-10\n-18\n+14\n+10\n+14\n+15\n-11\n+8\n+25\n+21\n-31\n-5\n-38\n-52\n+4\n-5\n+11\n+2\n-1\n-3\n-12\n+6\n-19\n-2\n+1\n-17\n+8\n-13\n-4\n-8\n+3\n-20\n+5\n-9\n+8\n-10\n+15\n+14\n+9\n-4\n-9\n-1\n+12\n-16\n-8\n+9\n+18\n+13\n+7\n-9\n+18\n-17\n-9\n+13\n+7\n+8\n+3\n-20\n+19\n-9\n-17\n-24\n+8\n+7\n+4\n+26\n-1\n-12\n+38\n-79\n-15\n+20\n-19\n+9\n-25\n+4\n+1\n+2\n+2\n-19\n+22\n-11\n+25\n-20\n+5\n-14\n-37\n+14\n+12\n+34\n+1\n+40\n+38\n-21\n-12\n+104\n+120\n+14\n+57\n-20\n-1\n-17\n+8\n+6\n-9\n-62\n+29\n+25\n-107\n+236\n+43\n+13\n+68519\n-16\n+8\n-2\n-17\n+2\n-18\n-1\n+2\n+8\n+10\n-9\n+12\n-7\n+15\n+14\n-7\n-12\n+13\n+19\n-16\n-17\n-19\n-8\n-18\n+4\n-1\n+3\n+4\n-19\n+18\n-16\n-10\n-14\n-6\n+16\n+17\n+1\n+14\n+14\n+3\n-11\n-19\n-21\n-17\n-1\n-10\n+5\n-9\n-15\n-8\n-5\n-4\n+3\n+2\n+1\n-7\n+14\n-19\n-3\n+7\n+18\n-4\n-19\n-12\n-18\n+2\n+15\n-19\n+10\n+16\n-14\n-14\n+19\n+14\n-4\n+1\n+7\n-19\n-3\n-16\n-16\n-17\n-5\n-9\n+3\n+16\n+17\n-2\n-18\n-18\n+7\n-10\n+15\n+13\n+15\n+5\n-6\n+9\n+9\n+3\n+7\n+6\n-7\n+10\n-1\n-5\n+16\n-5\n+20\n-9\n+20\n-13\n+3\n+13\n-9\n+11\n+18\n+10\n+19\n-16\n-18\n-2\n+6\n-15\n-9\n+19\n-4\n-7\n+13\n-9\n-11\n+3\n+6\n-11\n-11\n-10\n+5\n+23\n+5\n+18\n+4\n+9\n+15\n-2\n+18\n+7\n+7\n+16\n+7\n-9\n-19\n-15\n+16\n-2\n+16\n-5\n-8\n+11\n+7\n+19\n+18\n+18\n+16\n-12\n-6\n+8\n+18\n+16\n-17\n+16\n+9\n+9\n-15\n+3\n+7\n-16\n-10\n-11\n+17\n-3\n-10\n-10\n-2\n-5\n+12\n-15\n-19\n+12\n-14\n+19\n-14\n-12\n+13\n+2\n-9\n-14\n-11\n+3\n-6\n-6\n+23\n+13\n+6\n+5\n+6\n+5\n+2\n-10\n+15\n+13\n+9\n+11\n-4\n-9\n+5\n+20\n+1\n+18\n+4\n-10\n+1\n-12\n-6\n-5\n+2\n+1\n+11\n+1\n+4\n+11\n-6\n+12\n+12\n-17\n-15\n+17\n+6\n-2\n+16\n-18\n-9\n+8\n+4\n+19\n+7\n-2\n+12\n+6\n-10\n+2\n+7\n+7\n-3\n-10\n+17\n-12\n+11\n-12\n-1\n+5\n+19\n+8\n-16\n-7\n+12\n+7\n-11\n+19\n-16\n+17\n+3\n+17\n+7\n-8\n-7\n+12\n+19\n-5\n+4\n-12\n+10\n+20\n+10\n-14\n+3\n-13\n+12\n-14\n-22\n-6\n-6\n+11\n-19\n+21\n-6\n-12\n+21\n+6\n+3\n+18\n-17\n+15\n-6\n-16\n-14\n-17\n+8\n-5\n+3\n+3\n-10\n+12\n+25\n+3\n-9\n-20\n-18\n+6\n-2\n-2\n-11\n-6\n-19\n-17\n-12\n+18\n-17\n+6\n+8\n+1\n+10\n-1\n-14\n+9\n-16\n+19\n-18\n-3\n+7\n+19\n-14\n+13\n+4\n+16\n+19\n-11\n-20\n-14\n-18\n+7\n-23\n-37\n-7\n-7\n+23\n+18\n+12\n-17\n+13\n-5\n-14\n-19\n+20\n-13\n-20\n+4\n+3\n+10\n+27\n+3\n+25\n+52\n+1\n+3\n-1\n-19\n+2\n-25\n+32\n+36\n+17\n+10\n-16\n-14\n+28\n+30\n+13\n+10\n+11\n+10\n-19\n-7\n+21\n+16\n-15\n+2\n+16\n+36\n+13\n+10\n+17\n+6\n-8\n-5\n+20\n+7\n-15\n+5\n-9\n-14\n-7\n+17\n-6\n+16\n+10\n+16\n-18\n+12\n-8\n-16\n-14\n+20\n-38\n+25\n+30\n+60\n+2\n+13\n+4\n+19\n+2\n+5\n-22\n+18\n-19\n-13\n+30\n-6\n-45\n-2\n+3\n+7\n-34\n-16\n-130\n-24\n-18\n+4\n+7\n-10\n+12\n+8\n-5\n+12\n-11\n-3\n-4\n-1\n+21\n-15\n-13\n-17\n+1\n-31\n+79\n-1\n-42\n-41\n+20\n+52\n+16\n+54\n-324\n+68055\n-4\n+2\n+21\n+14\n-15\n+11\n-19\n+11\n+13\n-3\n-18\n+1\n-2\n+13\n-17\n+20\n+19\n+8\n-20\n-18\n+13\n-15\n+1\n-22\n-3\n-5\n-4\n+3\n-1\n-17\n-21\n+12\n-15\n+28\n-136507"
+clj꞉aoc2018-1꞉> 
+["-1"
+ "-17"
+ "-4"
+ "-15"
+ "-1"
+ "+6"
+ "-17"
+ "+3"
+ "-14"
+ "-9"
+ "-5"
+ "+16"
+ "+10"
+ "+15"
+ "+13"
+ "+15"
+ "+9"
+ "+15"
+ "+18"
+ "-14"
+ "+2"
+ "+4"
+ "-13"
+ "-1"
+ "+9"
+ "-11"
+ "+18"
+ "+18"
+ "-7"
+ "+13"
+ "-9"
+ "+2"
+ "-16"
+ "+2"
+ "+10"
+ "-11"
+ "+8"
+ "-5"
+ "-8"
+ "-17"
+ "+15"
+ "+4"
+ "+15"
+ "-6"
+ "+21"
+ "+6"
+ "-9"
+ "+16"
+ "+2"
+ "+5"
+ ...]
+clj꞉aoc2018-1꞉> 
+["-1"
+ "-17"
+ "-4"
+ "-15"
+ "-1"
+ "+6"
+ "-17"
+ "+3"
+ "-14"
+ "-9"
+ "-5"
+ "+16"
+ "+10"
+ "+15"
+ "+13"
+ "+15"
+ "+9"
+ "+15"
+ "+18"
+ "-14"
+ "+2"
+ "+4"
+ "-13"
+ "-1"
+ "+9"
+ "-11"
+ "+18"
+ "+18"
+ "-7"
+ "+13"
+ "-9"
+ "+2"
+ "-16"
+ "+2"
+ "+10"
+ "-11"
+ "+8"
+ "-5"
+ "-8"
+ "-17"
+ "+15"
+ "+4"
+ "+15"
+ "-6"
+ "+21"
+ "+6"
+ "-9"
+ "+16"
+ "+2"
+ "+5"
+ ...]
+clj꞉aoc2018-1꞉> 
+["-1"
+ "-17"
+ "-4"
+ "-15"
+ "-1"
+ "+6"
+ "-17"
+ "+3"
+ "-14"
+ "-9"
+ "-5"
+ "+16"
+ "+10"
+ "+15"
+ "+13"
+ "+15"
+ "+9"
+ "+15"
+ "+18"
+ "-14"
+ "+2"
+ "+4"
+ "-13"
+ "-1"
+ "+9"
+ "-11"
+ "+18"
+ "+18"
+ "-7"
+ "+13"
+ "-9"
+ "+2"
+ "-16"
+ "+2"
+ "+10"
+ "-11"
+ "+8"
+ "-5"
+ "-8"
+ "-17"
+ "+15"
+ "+4"
+ "+15"
+ "-6"
+ "+21"
+ "+6"
+ "-9"
+ "+16"
+ "+2"
+ "+5"
+ ...]
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at aoc2018-1/eval7588 (REPL:15).
+; Wrong number of args (0) passed to: clojure.lang.PersistentVector
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at aoc2018-1/eval7594 (REPL:15).
+; Wrong number of args (1) passed to: clojure.core/reduce
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+6
+clj꞉aoc2018-1꞉> 
+\t
+clj꞉aoc2018-1꞉> 
+\a
+clj꞉aoc2018-1꞉> 
+\t
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at aoc2018-1/eval7608 (REPL:18).
+; Wrong number of args (1) passed to: clojure.core/reduce
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+("-1"
+ "-17"
+ "-4"
+ "-15"
+ "-1"
+ "+6"
+ "-17"
+ "+3"
+ "-14"
+ "-9"
+ "-5"
+ "+16"
+ "+10"
+ "+15"
+ "+13"
+ "+15"
+ "+9"
+ "+15"
+ "+18"
+ "-14"
+ "+2"
+ "+4"
+ "-13"
+ "-1"
+ "+9"
+ "-11"
+ "+18"
+ "+18"
+ "-7"
+ "+13"
+ "-9"
+ "+2"
+ "-16"
+ "+2"
+ "+10"
+ "-11"
+ "+8"
+ "-5"
+ "-8"
+ "-17"
+ "+15"
+ "+4"
+ "+15"
+ "-6"
+ "+21"
+ "+6"
+ "-9"
+ "+16"
+ "+2"
+ "+5"
+ ...)
+clj꞉aoc2018-1꞉> 
+("1"
+ "17"
+ "4"
+ "15"
+ "1"
+ "6"
+ "17"
+ "3"
+ "14"
+ "9"
+ "5"
+ "16"
+ "10"
+ "15"
+ "13"
+ "15"
+ "9"
+ "15"
+ "18"
+ "14"
+ "2"
+ "4"
+ "13"
+ "1"
+ "9"
+ "11"
+ "18"
+ "18"
+ "7"
+ "13"
+ "9"
+ "2"
+ "16"
+ "2"
+ "10"
+ "11"
+ "8"
+ "5"
+ "8"
+ "17"
+ "15"
+ "4"
+ "15"
+ "6"
+ "21"
+ "6"
+ "9"
+ "16"
+ "2"
+ "5"
+ ...)
+clj꞉aoc2018-1꞉> 
+; Error printing return value (ClassCastException) at clojure.lang.RT/intCast (RT.java:1221).
+; class java.lang.String cannot be cast to class java.lang.Character (java.lang.String and java.lang.Character are in module java.base of loader 'bootstrap')
+clj꞉aoc2018-1꞉> 
+("1"
+ "17"
+ "4"
+ "15"
+ "1"
+ "6"
+ "17"
+ "3"
+ "14"
+ "9"
+ "5"
+ "16"
+ "10"
+ "15"
+ "13"
+ "15"
+ "9"
+ "15"
+ "18"
+ "14"
+ "2"
+ "4"
+ "13"
+ "1"
+ "9"
+ "11"
+ "18"
+ "18"
+ "7"
+ "13"
+ "9"
+ "2"
+ "16"
+ "2"
+ "10"
+ "11"
+ "8"
+ "5"
+ "8"
+ "17"
+ "15"
+ "4"
+ "15"
+ "6"
+ "21"
+ "6"
+ "9"
+ "16"
+ "2"
+ "5"
+ ...)
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:19:11).
+; Unable to resolve symbol: % in this context
+clj꞉aoc2018-1꞉> 
+("1"
+ "17"
+ "4"
+ "15"
+ "1"
+ "6"
+ "17"
+ "3"
+ "14"
+ "9"
+ "5"
+ "16"
+ "10"
+ "15"
+ "13"
+ "15"
+ "9"
+ "15"
+ "18"
+ "14"
+ "2"
+ "4"
+ "13"
+ "1"
+ "9"
+ "11"
+ "18"
+ "18"
+ "7"
+ "13"
+ "9"
+ "2"
+ "16"
+ "2"
+ "10"
+ "11"
+ "8"
+ "5"
+ "8"
+ "17"
+ "15"
+ "4"
+ "15"
+ "6"
+ "21"
+ "6"
+ "9"
+ "16"
+ "2"
+ "5"
+ ...)
+clj꞉aoc2018-1꞉> 
+; Execution error (ClassCastException) at aoc2018-1/eval7657 (REPL:18).
+; class java.lang.String cannot be cast to class java.lang.Character (java.lang.String and java.lang.Character are in module java.base of loader 'bootstrap')
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+; Error printing return value (IllegalArgumentException) at clojure.lang.RT/seqFrom (RT.java:557).
+; Don't know how to create ISeq from: aoc2018_1$eval7673$fn__7674
+clj꞉aoc2018-1꞉> 
+; Execution error (ClassCastException) at aoc2018-1/eval7690 (REPL:19).
+; class aoc2018_1$eval7690$fn__7691 cannot be cast to class java.lang.Number (aoc2018_1$eval7690$fn__7691 is in unnamed module of loader clojure.lang.DynamicClassLoader @59cd4ed; java.lang.Number is in module java.base of loader 'bootstrap')
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:19:29).
+; Unable to resolve symbol: % in this context
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:19:24).
+; Unable to resolve symbol: % in this context
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+285830
+clj꞉aoc2018-1꞉> 
+285830
+clj꞉aoc2018-1꞉> 
+"+"
+clj꞉aoc2018-1꞉> 
+"+"
+clj꞉aoc2018-1꞉> 
+"-"
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/+]
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+285830
+clj꞉aoc2018-1꞉> 
+285830
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+285830
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+; Error printing return value (IllegalArgumentException) at clojure.lang.RT/seqFrom (RT.java:557).
+; Don't know how to create ISeq from: aoc2018_1$eval7851$fn__7852
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling if at (src/aoc2018_1.clj:18:1).
+; Too many arguments to if
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+; Error printing return value (IllegalArgumentException) at clojure.lang.RT/seqFrom (RT.java:557).
+; Don't know how to create ISeq from: aoc2018_1$eval7874$fn__7875
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:21:7).
+; Unable to find static field: parseInt in class java.lang.Integer
+clj꞉aoc2018-1꞉> 
+; Syntax error reading source at (REPL:21:37).
+; Unmatched delimiter: )
+clj꞉aoc2018-1꞉> 
+; Syntax error reading source at (REPL:21:41).
+; Unmatched delimiter: )
+clj꞉aoc2018-1꞉> 
+285830
+clj꞉aoc2018-1꞉> 
+(1 2 3)
+clj꞉aoc2018-1꞉> 
+(1 2 3)
+clj꞉aoc2018-1꞉> 
+6
+clj꞉aoc2018-1꞉> 
+; Execution error (ClassCastException) at aoc2018-1/eval7904 (REPL:23).
+; class java.lang.Long cannot be cast to class clojure.lang.IFn (java.lang.Long is in module java.base of loader 'bootstrap'; clojure.lang.IFn is in unnamed module of loader 'app')
+clj꞉aoc2018-1꞉> 
+[1 2]
+clj꞉aoc2018-1꞉> 
+[#function[clojure.core/+] 2]
+clj꞉aoc2018-1꞉> 
+[[#function[clojure.core/+] 2] [#function[clojure.core/+] 2]]
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at aoc2018-1/eval7921 (REPL:23).
+; Wrong number of args (0) passed to: clojure.core/map/fn--5931
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:24:8).
+; Unable to find static field: parseInt in class java.lang.Integer
+clj꞉aoc2018-1꞉> 
+; Error printing return value (ClassCastException) at aoc2018-1/eval7953$fn (NO_SOURCE_FILE:24).
+; class java.lang.String cannot be cast to class clojure.lang.IFn (java.lang.String is in module java.base of loader 'bootstrap'; clojure.lang.IFn is in unnamed module of loader 'app')
+clj꞉aoc2018-1꞉> 
+; Error printing return value (ArityException) at clojure.lang.AFn/throwArity (AFn.java:429).
+; Wrong number of args (0) passed to: clojure.lang.PersistentVector
+clj꞉aoc2018-1꞉> 
+; Error printing return value (ClassCastException) at aoc2018-1/eval7965$fn (NO_SOURCE_FILE:24).
+; class java.lang.String cannot be cast to class clojure.lang.IFn (java.lang.String is in module java.base of loader 'bootstrap'; clojure.lang.IFn is in unnamed module of loader 'app')
+clj꞉aoc2018-1꞉> 
+; Error printing return value (ArityException) at clojure.lang.AFn/throwArity (AFn.java:429).
+; Wrong number of args (0) passed to: clojure.lang.PersistentVector
+clj꞉aoc2018-1꞉> 
+; Error printing return value (ClassCastException) at aoc2018-1/eval7977$fn (NO_SOURCE_FILE:24).
+; class java.lang.Integer cannot be cast to class clojure.lang.IFn (java.lang.Integer is in module java.base of loader 'bootstrap'; clojure.lang.IFn is in unnamed module of loader 'app')
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:24:7).
+; Unable to find static field: parseInt in class java.lang.Integer
+clj꞉aoc2018-1꞉> 
+(1
+ 17
+ 4
+ 15
+ 1
+ 6
+ 17
+ 3
+ 14
+ 9
+ 5
+ 16
+ 10
+ 15
+ 13
+ 15
+ 9
+ 15
+ 18
+ 14
+ 2
+ 4
+ 13
+ 1
+ 9
+ 11
+ 18
+ 18
+ 7
+ 13
+ 9
+ 2
+ 16
+ 2
+ 10
+ 11
+ 8
+ 5
+ 8
+ 17
+ 15
+ 4
+ 15
+ 6
+ 21
+ 6
+ 9
+ 16
+ 2
+ 5
+ ...)
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+474
+clj꞉aoc2018-1꞉> 
+285830
+clj꞉aoc2018-1꞉> 
+474
+clj꞉aoc2018-1꞉> 
+474
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:25:11).
+; Unable to resolve symbol: % in this context
+clj꞉aoc2018-1꞉> 
+; Execution error (ClassCastException) at aoc2018-2/eval8060$fn (REPL:25).
+; class java.lang.String cannot be cast to class clojure.lang.IFn (java.lang.String is in module java.base of loader 'bootstrap'; clojure.lang.IFn is in unnamed module of loader 'app')
+clj꞉aoc2018-1꞉> 
+474
+clj꞉aoc2018-2꞉> 
+(3 3 4 -2 -4)
+clj꞉aoc2018-1꞉> 
+(3 3 4 -2 -4)
+clj꞉aoc2018-1꞉> 
+; Error printing return value (IndexOutOfBoundsException) at clojure.lang.PersistentVector/arrayFor (PersistentVector.java:158).
+; null
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling def at (src/aoc2018_1.clj:32:6).
+; Too many arguments to def
+clj꞉aoc2018-1꞉> 
+(3 3 4 -2 -4)
+clj꞉aoc2018-1꞉> 
+; Execution error (ClassCastException) at aoc2018-1/eval8083 (REPL:32).
+; class clojure.lang.Var cannot be cast to class java.lang.Number (clojure.lang.Var is in unnamed module of loader 'app'; java.lang.Number is in module java.base of loader 'bootstrap')
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at aoc2018-1/eval8087 (REPL:32).
+; Wrong number of args (2) passed to: aoc2018-1/eval8087/trace--8088
+clj꞉aoc2018-1꞉> 
+4
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at aoc2018-1/eval8093 (REPL:32).
+; Wrong number of args (2) passed to: aoc2018-1/eval8093/trace--8094
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at aoc2018-1/eval8097 (REPL:32).
+; Wrong number of args (2) passed to: aoc2018-1/eval8097/trace--8098
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at aoc2018-1/eval8101 (REPL:32).
+; Wrong number of args (2) passed to: aoc2018-1/eval8101/trace--8102
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:32:9).
+; Unable to resolve symbol: return in this context
+clj꞉aoc2018-1꞉> 
+(#function[clojure.core/+]
+ #function[clojure.core/+]
+ #function[clojure.core/+]
+ #function[clojure.core/+]
+ #function[clojure.core/+])
+clj꞉aoc2018-1꞉> 
+(3 3 4 -2 -4)
+clj꞉aoc2018-1꞉> 
+#function[clojure.core/map/fn--5931]
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at nrepl.middleware.interruptible-eval/evaluate$fn$fn (interruptible_eval.clj:87).
+; Wrong number of args (1) passed to: clojure.core/for
+clj꞉aoc2018-1꞉> 
+; Syntax error reading source at (REPL:35:17).
+; Unmatched delimiter: )
+clj꞉aoc2018-1꞉> 
+(9 9 16 4 16)
+clj꞉aoc2018-1꞉> 
+(6 6 8 -4 -8)
+clj꞉aoc2018-1꞉> 
+(6 6 8 -4 -8)
+clj꞉aoc2018-1꞉> 
+(6 6 8 -4 -8)
+clj꞉aoc2018-1꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval8188$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clojure.lang.Compiler/load (Compiler.java:7665)
+aoc2018-1/eval8184 (NO_SOURCE_FILE:1)
+clojure.lang.Compiler/eval (Compiler.java:7194)
+clojure.core/eval (core.clj:3215)
+clojure.core/eval (core.clj:3211)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:87)
+clojure.core/apply (core.clj:667)
+clojure.core/with-bindings* (core.clj:1990)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:87)
+clojure.main/repl (main.clj:437)
+clojure.main/repl (main.clj:458)
+clojure.main/repl (main.clj:368)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:84)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:56)
+nrepl.middleware.interruptible-eval/interruptible-eval (interruptible_eval.clj:152)
+nrepl.middleware.session/session-exec (session.clj:218)
+nrepl.middleware.session/session-exec (session.clj:217)
+java.lang.Thread/run (Thread.java:833)
+clj꞉aoc2018-1꞉> 
+; Execution error (ArityException) at nrepl.middleware.interruptible-eval/evaluate$fn$fn (interruptible_eval.clj:87).
+; Wrong number of args (3) passed to: clojure.core/for
+clj꞉aoc2018-1꞉> 
