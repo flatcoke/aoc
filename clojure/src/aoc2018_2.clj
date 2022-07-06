@@ -83,7 +83,7 @@
  "
   [s]
   (->> (range (count s))
-       (map #(replace-to-dot s %))))
+       (map (partial replace-to-dot s))))
 
 (comment
   "day2 part2"
@@ -100,7 +100,7 @@
 
 (comment
   (->> (range (count "abcdef"))
-       (map #(replace-to-dot "abcdef" %))
+       (map (partial replace-to-dot "abcdef"))
        frequencies))
 
 (comment
