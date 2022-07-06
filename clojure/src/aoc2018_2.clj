@@ -1,4 +1,5 @@
-(ns aoc2018-2)
+(ns aoc2018-2
+  (:require [clojure.string :as string]))
 
 ;; 파트 1
 ;; 주어진 각각의 문자열에서, 같은 문자가 두번 혹은 세번씩 나타난다면 각각을 한번씩 센다.
@@ -12,6 +13,30 @@
 ;; abcdee 2개의 e -> (두번 나오는 문자열 수: 4, 세번 나오는 문자열 수: 2)
 ;; ababab 3개의 a, 3개의 b 지만 한 문자열에서 같은 갯수는 한번만 카운트함 -> (두번 나오는 문자열 수: 4, 세번 나오는 문자열 수: 3)
 ;; 답 : 4 * 3 = 12
+
+(defn get-sample-data []
+  (->> (slurp "./resources/aoc2018_2.txt")
+       (clojure.string/split-lines)))
+
+(comment
+  (->> (slurp "./resources/aoc2018_2.txt")
+       (clojure.string/split-lines)))
+
+
+(defn has-duplicated-word? [n word]
+  (->> (frequencies word)
+       vals
+       (filter #(= % n))
+       first))
+
+(def has-two-duplicated? (partial has-duplicated-word? 2))
+
+(def has-three-duplicated? (partial has-duplicated-word? 3))
+
+(comment
+  (->> (get-sample-data)
+       (#(* (count (filter has-two-duplicated? %))
+            (count (filter has-three-duplicated? %))))))
 
 
 ;; 파트 2
