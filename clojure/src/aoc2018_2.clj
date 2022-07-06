@@ -82,31 +82,27 @@
   result: [.bcd a.cd ab.d abc.]
  "
   [s]
-  (->>
-   (range (count s))
-   (map #(replace-to-dot s %))))
+  (->> (range (count s))
+       (map #(replace-to-dot s %))))
 
 (comment
   "day2 part2"
-  (->>
-   (get-sample-data "./resources/aoc2018_2.txt")
-   (map add-dot-to-all-case)
-   flatten
-   frequencies
-   (filter #(= (second %) 2))
-   ffirst
-   (#(clojure.string/replace-first % "." ""))))
+  (->> (get-sample-data "./resources/aoc2018_2.txt")
+       (map add-dot-to-all-case)
+       flatten
+       frequencies
+       (filter #(= (second %) 2))
+       ffirst
+       (#(clojure.string/replace-first % "." ""))))
 
 (comment
   (clojure.string/replace-first "cvgywxqubnuaefmsl.jdrpfzyi" "." ""))
 
 (comment
-  (->>
-   (range (count "abcdef"))
-   (map #(replace-to-dot "abcdef" %))
-   frequencies))
+  (->> (range (count "abcdef"))
+       (map #(replace-to-dot "abcdef" %))
+       frequencies))
 
 (comment
-  (->>
-   (range (count "cvgowxquwnhaefmulkjdrptbyi"))
-   (println #(subs "cvgowxquwnhaefmulkjdrptbyi" % 1))))
+  (->> (range (count "cvgowxquwnhaefmulkjdrptbyi"))
+       (println #(subs "cvgowxquwnhaefmulkjdrptbyi" % 1))))
