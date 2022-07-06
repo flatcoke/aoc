@@ -1,13 +1,17 @@
 (ns aoc2018-1
   (:require [split-lines :as clojure.string]))
 
+
+(defn get-sample-data []
+  (->> (slurp "./resources/aoc2018_1.txt")
+       (clojure.string/split-lines)
+       (map #(Integer/parseInt %))))
+
 ;; 파트 1
 ;; 주어진 입력의 모든 숫자를 더하시오.
 ;; 예) +10 -2 -5 +1 이 입력일 경우 4를 출력
 
-(->> (slurp "./resources/aoc2018_1.txt")
-     (clojure.string/split-lines)
-     (map #(Integer/parseInt %))
+(->> (get-sample-data)
      (reduce +))
 
 
@@ -22,10 +26,7 @@
     (reduced value)
     (conj trace value)))
 
-(->>
- (slurp "./resources/aoc2018_1.txt")
- (clojure.string/split-lines)
- (map #(Integer/parseInt %))
- cycle
- (reductions +)
- (reduce get-first-duplicated #{}))
+(->> (get-sample-data)
+     cycle
+     (reductions +)
+     (reduce get-first-duplicated #{}))
