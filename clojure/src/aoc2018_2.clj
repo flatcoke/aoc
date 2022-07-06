@@ -65,11 +65,7 @@
 
 (defn replace-to-dot
   [s n]
-  (str (subs s 0 n) "&" (subs s (+ n 1) (count s))))
-
-(comment
-  (println (replace-to-dot "taemin" 10))
-  (str (subs "taemin" 0 0) (subs "taemin" (+ 0 1) (count "taemin"))))
+  (str (subs s 0 n) "." (subs s (+ n 1) (count s))))
 
 (comment
   (->>
@@ -77,7 +73,7 @@
    (map #(replace-to-dot "abcdef" %))
    frequencies))
 
-(defn abcd
+(defn add-dot-to-all-case
   [s]
   (->>
    (range (count s))
@@ -86,15 +82,14 @@
 (comment
   (->>
    (get-sample-data)
-   (map abcd)
+   (map add-dot-to-all-case)
    (flatten)
    frequencies
    (filter #(= (second %) 2))
    (first)
    (first)
-  ;;  (clojure.string/replace-first "]" "")))
-   ))
+   #(clojure.string/replace % #"." "")))
 
 
 (comment
-  (clojure.string/replace-first "cvgywxqubnuaefmsl-jdrpfzyi" "-" ""))
+  (clojure.string/replace-first "cvgywxqubnuaefmsl.jdrpfzyi" "." ""))
