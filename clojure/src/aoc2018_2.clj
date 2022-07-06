@@ -56,3 +56,45 @@
 ;; #################################
 ;; ###        Refactoring        ###
 ;; #################################
+
+
+(comment
+  (->>
+   (range (count "cvgowxquwnhaefmulkjdrptbyi"))
+   (println #(subs "cvgowxquwnhaefmulkjdrptbyi" % 1))))
+
+(defn replace-to-dot
+  [s n]
+  (str (subs s 0 n) "&" (subs s (+ n 1) (count s))))
+
+(comment
+  (println (replace-to-dot "taemin" 10))
+  (str (subs "taemin" 0 0) (subs "taemin" (+ 0 1) (count "taemin"))))
+
+(comment
+  (->>
+   (range (count "abcdef"))
+   (map #(replace-to-dot "abcdef" %))
+   frequencies))
+
+(defn abcd
+  [s]
+  (->>
+   (range (count s))
+   (map #(replace-to-dot s %))))
+
+(comment
+  (->>
+   (get-sample-data)
+   (map abcd)
+   (flatten)
+   frequencies
+   (filter #(= (second %) 2))
+   (first)
+   (first)
+  ;;  (clojure.string/replace-first "]" "")))
+   ))
+
+
+(comment
+  (clojure.string/replace-first "cvgywxqubnuaefmsl-jdrpfzyi" "-" ""))
