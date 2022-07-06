@@ -67,6 +67,7 @@
   [s n]
   (str (subs s 0 n) "." (subs s (+ n 1) (count s))))
 
+
 (comment
   (->>
    (range (count "abcdef"))
@@ -83,12 +84,11 @@
   (->>
    (get-sample-data)
    (map add-dot-to-all-case)
-   (flatten)
+   flatten
    frequencies
    (filter #(= (second %) 2))
-   (first)
-   (first)
-   #(clojure.string/replace % #"." "")))
+   ffirst
+   (#(clojure.string/replace-first % "." ""))))
 
 
 (comment
