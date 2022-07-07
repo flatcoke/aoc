@@ -1,4 +1,4 @@
 .idea/
 clojure/clojure.im
 .clj-kondo
-clojure/.calva/output-window/output.calva-repl
+clojure/.calva/*
