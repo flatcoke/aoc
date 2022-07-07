@@ -48,7 +48,11 @@
         id             (Integer/parseInt (data 0))
         [x y]          (map #(Integer/parseInt %) (string/split (data 1) #","))
         [width height] (map #(Integer/parseInt %) (string/split (data 2) #"x"))]
-    (->> (hash-map :id id, :x x, :y y, :width width, :height height))))
+    {:id     id
+     :x      x
+     :y      y
+     :width  width
+     :height height}))
 
 (defn generate-map-key
   "key로 사용하기 위해 x y를 콤마로 구분한 문자로 변경
@@ -88,32 +92,6 @@
        (vals)
        (filter #(> % 1))
        (count)))
-
-(comment
-  (let [trace    {"704,926" 0}
-        test-map {:y      926
-                  :width  5
-                  :id     30
-                  :x      704
-                  :height 4}]
-
-    (for [xy (generate-range-coordinate test-map)]
-      (assoc trace xy 1))))
-
-(comment
-  (let [test   {:y      3
-                :width  4
-                :id     30
-                :x      1
-                :height 4}
-        x      (get test :x)
-        y      (get test :y)
-        width  (get test :width)
-        height (get test :height)]
-
-    (for [xx (range width)
-          yy (range height)]
-      [(+ x xx) (+ y yy)])))
 
 
 ;; 파트 2

@@ -2,3 +2,4 @@
 clojure/clojure.im
 .clj-kondo
 clojure/.calva/*
+.lsp/
