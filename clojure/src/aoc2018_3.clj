@@ -57,7 +57,8 @@
   (str x "," y))
 
 
-(defn generate-range-cood
+(defn generate-range-coordinate
+
   [location-map]
   (let [x (get location-map :x)
         y (get location-map :y)
@@ -73,7 +74,7 @@
   (->> (get-sample-data "./resources/aoc2018_3.txt")
        (map clean-up-dirty-word)
        (map parse-string-to-location-map)
-       (map generate-range-cood)
+       (map generate-range-coordinate)
        (flatten)
        (frequencies)
        (vals)
@@ -86,10 +87,9 @@
                   :width  5
                   :id     30
                   :x      704
-                  :height 4}
-        visited  (generate-range-cood test-map)]
+                  :height 4}]
 
-    (for [xy (generate-range-cood test-map)]
+    (for [xy (generate-range-coordinate test-map)]
       (assoc trace xy 1))))
 
 (comment
