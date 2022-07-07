@@ -1,4 +1,5 @@
-(ns aoc2018_3)
+(ns aoc2018_3
+  (:require [clojure.string :as string]))
 
 
 ;; 파트 1
@@ -24,6 +25,87 @@
 ;; 겹치는 지역의 갯수를 출력하시오. (위의 예시에서는 4)
 
 
+(defn get-sample-data [path]
+  (->> (slurp path)
+       (string/split-lines)))
+
+(defn clean-up-dirty-word
+  "치환할때 필요없는 데이터를 삭제
+  input: '#3 @ 5,5: 2x2'
+  output: '3 5,5 2x2'"
+
+  [dirty-str]
+  (-> (string/replace dirty-str "@" "")
+      (string/replace "#" "")
+      (string/replace ":" "")
+      (string/replace "  " " ")))
+
+(defn parse-string-to-location-map
+  "FROM `1 1,3 4x4` TO {:id :x :y :width :height} 형태로 치환"
+  [s]
+  (let [data           (string/split s #" ")
+        id             (Integer/parseInt (data 0))
+        [x y]          (map #(Integer/parseInt %) (string/split (data 1) #","))
+        [width height] (map #(Integer/parseInt %) (string/split (data 2) #"x"))]
+    (->> (hash-map :id id, :x x, :y y, :width width, :height height))))
+
+(defn generate-map-key
+  "key로 사용하기 위해 x y를 콤마로 구분한 문자로 변경
+  input: 10 20
+  output: '10,20'"
+  [x y]
+  (str x "," y))
+
+
+(defn generate-range-cood
+  [location-map]
+  (let [x (get location-map :x)
+        y (get location-map :y)
+        w (get location-map :width)
+        h (get location-map :height)]
+
+    (for [xx (range w)
+          yy (range h)]
+      (generate-map-key (+ x xx) (+ y yy)))))
+
+(comment
+  "day3 part1"
+  (->> (get-sample-data "./resources/aoc2018_3.txt")
+       (map clean-up-dirty-word)
+       (map parse-string-to-location-map)
+       (map generate-range-cood)
+       (flatten)
+       (frequencies)
+       (vals)
+       (filter #(> % 1))
+       (count)))
+
+(comment
+  (let [trace    {"704,926" 0}
+        test-map {:y      926
+                  :width  5
+                  :id     30
+                  :x      704
+                  :height 4}
+        visited  (generate-range-cood test-map)]
+
+    (for [xy (generate-range-cood test-map)]
+      (assoc trace xy 1))))
+
+(comment
+  (let [test   {:y      3
+                :width  4
+                :id     30
+                :x      1
+                :height 4}
+        x      (get test :x)
+        y      (get test :y)
+        width  (get test :width)
+        height (get test :height)]
+
+    (for [xx (range width)
+          yy (range height)]
+      [(+ x xx) (+ y yy)])))
 
 
 ;; 파트 2
