@@ -77,9 +77,9 @@
         w (get location-map :width)
         h (get location-map :height)]
 
-    (for [xx (range w)
-          yy (range h)]
-      (generate-map-key (+ x xx) (+ y yy)))))
+    (for [delta-x (range w)
+          delta-y (range h)]
+      (generate-map-key (+ x delta-x) (+ y delta-y)))))
 
 (comment
   "day3 part1"
