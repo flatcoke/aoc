@@ -1,0 +1,93 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+o o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; Starting Jack-in Terminal: clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"0.9.0"},cider/cider-nrepl {:mvn/version,"0.28.5"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]"
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉user꞉>  ; Use `alt+enter` to evaluate
+; Jack-in done.
+clj꞉user꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval5570$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉aoc2018-1꞉> 
+#'aoc2018-1/get-sample-data
+clj꞉aoc2018-1꞉> 
+#'aoc2018-1/get-sample-data
+clj꞉aoc2018-1꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval7618$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉aoc2018-1꞉> 
+; Execution error (IllegalArgumentException) at aoc2018-1/eval7622 (REPL:15).
+; Don't know how to create ISeq from: aoc2018_1$get_sample_data
+clj꞉aoc2018-1꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval7631$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉aoc2018-1꞉> 
+#'aoc2018-1/get-sample-data
+clj꞉aoc2018-1꞉> 
+#'aoc2018-1/get-sample-data
+clj꞉aoc2018-1꞉> 
+; Execution error (IllegalArgumentException) at aoc2018-1/eval7645 (REPL:15).
+; Don't know how to create ISeq from: aoc2018_1$get_sample_data
+clj꞉aoc2018-1꞉> 
+; Execution error (IllegalArgumentException) at aoc2018-1/eval7647 (REPL:15).
+; Don't know how to create ISeq from: aoc2018_1$get_sample_data
+clj꞉aoc2018-1꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval7656$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉aoc2018-1꞉> 
+474
+clj꞉aoc2018-1꞉> 
+#'aoc2018-1/get-sample-data
+clj꞉aoc2018-1꞉> 
+474
+clj꞉aoc2018-1꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval7676$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:33:6).
+; Unable to resolve symbol: get-first-duplicated in this context
+clj꞉aoc2018-1꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval7688$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉aoc2018-1꞉> 
+; Syntax error compiling at (src/aoc2018_1.clj:33:6).
+; Unable to resolve symbol: get-first-duplicated in this context
+clj꞉aoc2018-1꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval7700$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉aoc2018-1꞉> 
+#'aoc2018-1/get-first-duplicated
+clj꞉aoc2018-1꞉> 
+137041
+clj꞉aoc2018-1꞉> 
+; Evaluating file: aoc2018_1.clj
+; Execution error (FileNotFoundException) at aoc2018-1/eval7714$loading (aoc2018_1.clj:1).
+; Could not locate split_lines__init.class, split_lines.clj or split_lines.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+; Evaluation of file aoc2018_1.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉aoc2018-1꞉> 
