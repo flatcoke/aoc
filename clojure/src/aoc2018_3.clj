@@ -71,15 +71,10 @@
                 1,0
                 1,1
              )"
-  [location-map]
-  (let [x (get location-map :x)
-        y (get location-map :y)
-        w (get location-map :width)
-        h (get location-map :height)]
-
-    (for [delta-x (range w)
-          delta-y (range h)]
-      (generate-map-key (+ x delta-x) (+ y delta-y)))))
+  [{:keys [x y width height]}]
+  (for [delta-x (range width)
+        delta-y (range height)]
+    (generate-map-key (+ x delta-x) (+ y delta-y))))
 
 (comment
   "day3 part1"
@@ -87,16 +82,16 @@
        (map clean-up-dirty-word)
        (map parse-string-to-location-map)
        (map generate-range-coordinate)
-       (flatten)
-       (frequencies)
-       (vals)
+       flatten
+       frequencies
+       vals
        (filter #(> % 1))
-       (count)))
+       count))
 
 
 ;; 파트 2
 ;; 입력대로 모든 격자를 채우고 나면, 정확히 한 ID에 해당하는 영역이 다른 어떤 영역과도 겹치지 않음
-;; 위의 예시에서는 ID 3 이 ID 1, 2와 겹치지 않음. 3을 출력.
+;; 위의 예시에서는 ID
 ;; 겹치지 않는 영역을 가진 ID를 출력하시오. (문제에서 답이 하나만 나옴을 보장함)
 
 
@@ -107,13 +102,13 @@
                               (map parse-string-to-location-map))
         only-went-one    (->> all-location-map
                               (map generate-range-coordinate)
-                              (flatten)
-                              (frequencies)
+                              flatten
+                              frequencies
                               (into {} (filter #(-> % val (= 1))))
-                              (keys)
-                              (set))]
+                              keys
+                              set)]
     (->> all-location-map
          (map #(list (set (generate-range-coordinate %)) (get % :id)))
          (filter #(empty? (set/difference (first %) only-went-one)))
-         (first)
-         (last))))
+         first
+         last)))
