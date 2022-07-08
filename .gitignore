@@ -1,2 +1,5 @@
 .idea/
-clojure/clojure.iml
+clojure/clojure.im
+.clj-kondo
+clojure/.calva/*
+.lsp/
