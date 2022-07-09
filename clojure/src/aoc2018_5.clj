@@ -1,4 +1,6 @@
-(ns aoc2018_5)
+(ns aoc2018_5
+  (:require [clojure.string :as string]
+            [clojure.java.io :as io]))
 ;; 파트 1
 ;; 입력: dabAcCaCBAcCcaDA
 
@@ -8,9 +10,105 @@
 ;; 대문자-대문자, 소문자-소문자는 서로 반응하지 않음. aabAAB-> aabAAB (반응 없음)
 ;; 예시 dabAcCaCBAcCcaDA => dabCBAcaDA
 
+(defn get-sample-data [path]
+  (->> path
+       (io/resource)
+       (slurp)))
+
+
+;; version 1
+
+(defn is-pair-alphabet
+  "같은 문자에 대문주 소문자인지를 검사한다.
+  case: 1
+    input [A a] 
+    output true
+  case: 2
+    intput [a a] 
+    output false
+  case: 3
+    intput [a b] 
+    output false"
+  [a b]
+  (->> (- (int (.charAt a 0)) (int (.charAt b 0)))
+       Math/abs
+       (= 32)))
+
+(defn remove-pair-word
+  [coll index]
+  (into (subvec coll 0 index) (subvec coll (+ index 2))))
+
+
+(defn remove-pair-recursive
+  [v-words index]
+  (if-not (< index (- (count v-words) 1))
+    v-words
+    (if (is-pair-alphabet (nth v-words index) (nth v-words (+ index 1)))
+      (if (= index 0)
+        (remove-pair-recursive (remove-pair-word v-words index) 0)
+        (remove-pair-recursive (remove-pair-word v-words index) (- index 1)))
+      (remove-pair-recursive v-words (+ index 1)))))
+
+(comment
+  (get-sample-data "aoc2018_5.txt"))
+
+(comment
+  ;; (->> (abc (string/split (get-sample-data "aoc2018_5.txt") #"") 0)
+  (->> (remove-pair-recursive (string/split "dabAcCaCBAcCcaDA" #"") 0)
+       (string/join #"")
+       count))
+
+
+;; version2
+
+(defn is-pair-alphabet?
+  "같은 문자에 대문주 소문자인지를 검사한다.
+  case: 1
+    input [A a] 
+    output true
+  case: 2
+    intput [a a] 
+    output false
+  case: 3
+    intput [a b] 
+    output false"
+  [a b]
+  (->> (- (int a) (int b))
+       Math/abs
+       (= 32)))
+
+(defn remove-pair
+  "마지막 글자와 비교하여 매칭시 제거합니다."
+  [trace c]
+  (if (and (not-empty trace)
+           (is-pair-alphabet? (peek trace) c))
+    (pop trace)
+    (conj trace c)))
+
+(comment
+  (->>
+   (get-sample-data "aoc2018_5.txt")
+   (reduce remove-pair [])
+   count))
+
 ;; 주어진 input 에서 최종으로 남는 문자열을 리턴하시오.
 
 ;; 파트 2
 ;; 주어진 문자열에서 한 유닛 (대문자와 소문자)을 전부 없앤 후 반응시켰을 때, 가장 짧은 문자열의 길이를 리턴하시오.
 ;; 예를 들어 dabAcCaCBAcCcaDA 에서 a/A를 없애고 모두 반응시키면 dbCBcD가 되고 길이는 6인데 비해,
 ;; 같은 문자열에서 c/C를 없애고 모두 반응시키면 daDA가 남고 길이가 4이므로 4가 가장 짧은 길이가 됨.
+
+(defn char-range [start end]
+  (map char (range (int start) (inc (int end)))))
+
+(comment
+  (let [input-data (get-sample-data "aoc2018_5.txt")]
+  ;; (let [input-data "dabAcCaCBAcCcaDA"]
+    (->> (char-range \a \z)
+         (map (fn [c]
+                c
+                (->> (-> (string/replace input-data (str c) "")
+                         (string/replace (string/upper-case (str c)) ""))
+                     (reduce remove-pair [])
+                     count)))
+         (apply min))))
