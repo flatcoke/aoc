@@ -73,8 +73,8 @@
      :min-y min-y
      :max-x max-x
      :max-y max-y
-    ;;  :area-boundary area-boundary
-    ;;  :coords        coords
+     :area-boundary area-boundary
+     :coords        coords
      }))
 
 (defn distance
@@ -110,11 +110,11 @@
   (->> (get-sample-data "aoc2018_6.txt")
        generate-coords-map
        generate-all-distance-from-coords
-      ;;  remove-far-distance
-      ;;  vals
-      ;;  frequencies
-      ;;  (sort-by val >)
-       #_(parse-coords)))
+       remove-far-distance
+       vals
+       frequencies
+       (sort-by val >)
+      ))
 
 ;; 파트 2
 ;; 안전(safe) 한 지역은 근원지'들'로부터의 맨하탄거리(Manhattan distance, 격자를 상하좌우로만 움직일때의 최단 거리)의 '합'이 N 미만인 지역임.
