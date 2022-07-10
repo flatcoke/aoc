@@ -69,13 +69,12 @@
         area-boundary (for [delta-x (range (- max-x min-x))
                             delta-y (range (- max-y min-y))]
                         [(+ min-x delta-x) (+ min-y delta-y)])]
-    {:min-x min-x
-     :min-y min-y
-     :max-x max-x
-     :max-y max-y
+    {:min-x         min-x
+     :min-y         min-y
+     :max-x         max-x
+     :max-y         max-y
      :area-boundary area-boundary
-     :coords        coords
-     }))
+     :coords        coords}))
 
 (defn distance
   [[from-x from-y] [to-x to-y]]
@@ -97,24 +96,25 @@
 
 (defn remove-far-distance
   [coord-map]
-  (->> (:distances coord-map)
+  (conj coord-map {:closest_coords (->> (:distances coord-map)
 
-       (reduce (fn [acc obj]
-                 (let [[f s] (->> (val obj)
-                                  (sort-by second)
-                                  (take 2))]
-                   (conj acc (if (not= (second f) (second s))
-                               {(key obj) (first f)} {})))) {})))
+                                        (reduce (fn [acc obj]
+                                                  (let [[f s] (->> (val obj)
+                                                                   (sort-by second)
+                                                                   (take 2))]
+                                                    (conj acc (if (not= (second f) (second s))
+                                                                {(key obj) (first f)} {})))) {}))}))
 
 (comment
   (->> (get-sample-data "aoc2018_6.txt")
        generate-coords-map
        generate-all-distance-from-coords
        remove-far-distance
+       :closest_coords
        vals
        frequencies
        (sort-by val >)
-      ))
+       (drop 4)))
 
 ;; 파트 2
 ;; 안전(safe) 한 지역은 근원지'들'로부터의 맨하탄거리(Manhattan distance, 격자를 상하좌우로만 움직일때의 최단 거리)의 '합'이 N 미만인 지역임.
