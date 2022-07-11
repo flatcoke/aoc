@@ -86,6 +86,7 @@
     (conj trace c)))
 
 (comment
+  "day5 part1"
   (->>
    (get-sample-data "aoc2018_5.txt")
    (reduce remove-pair [])
@@ -102,8 +103,8 @@
   (map char (range (int start) (inc (int end)))))
 
 (comment
+  "day5 part2"
   (let [input-data (get-sample-data "aoc2018_5.txt")]
-  ;; (let [input-data "dabAcCaCBAcCcaDA"]
     (->> (char-range \a \z)
          (map (fn [c]
                 c
