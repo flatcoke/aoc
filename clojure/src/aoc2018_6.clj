@@ -139,3 +139,16 @@
 ;; Total distance: 5 + 6 + 4 + 2 + 3 + 10 = 30
 
 ;; N이 10000 미만인 안전한 지역의 사이즈를 구하시오.
+
+(comment
+  "day6 part2"
+  (let [coord-map (->> (get-sample-data "aoc2018_6.txt")
+                       generate-coords-map)
+        area (:area-boundary coord-map)
+        coords (:coords coord-map)]
+    (->> area
+         (map (fn [xy]
+                (apply + (map (fn [compare-xy]
+                                (distance xy compare-xy)) coords))))
+         (filter #(> 10000 %))
+         count)))
