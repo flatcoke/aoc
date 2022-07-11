@@ -160,8 +160,8 @@
   "day6 part2"
   (let [coord-map (->> (get-sample-data "aoc2018_6.txt")
                        generate-coords-map)
-        area (:area-boundary coord-map)
-        coords (:coords coord-map)]
+        area      (:area-boundary coord-map)
+        coords    (:coords coord-map)]
     (->> area
          (map (fn [xy]
                 (apply + (map (fn [compare-xy]
