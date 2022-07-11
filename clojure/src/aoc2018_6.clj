@@ -66,15 +66,24 @@
         max-y         (->> coords
                            (map second)
                            (apply max))
-        area-boundary (for [delta-x (range (- max-x min-x))
-                            delta-y (range (- max-y min-y))]
-                        [(+ min-x delta-x) (+ min-y delta-y)])]
+        coord-area (for [delta-x (range (+ (- max-x min-x) 1))
+                         delta-y (range (+ (- max-y min-y) 1))]
+                     [(+ min-x delta-x) (+ min-y delta-y)])
+        coord-area-boundary (->> coord-area
+                                 (filter (fn [[x y]]
+                                           (or (= x min-x)
+                                               (= x max-x)
+                                               (= y min-y)
+                                               (= y max-y)))))]
+
     {:min-x         min-x
      :min-y         min-y
      :max-x         max-x
      :max-y         max-y
-     :area-boundary area-boundary
+     :coord-area          coord-area
+     :coord-area-boundary coord-area-boundary
      :coords        coords}))
+
 
 (defn distance
   [[from-x from-y] [to-x to-y]]
@@ -87,12 +96,26 @@
 (defn generate-all-distance-from-coords
   [coord-map]
   (conj coord-map
-        {:distances (->> (:area-boundary coord-map)
+        {:distances (->> (:coord-area coord-map)
                          (reduce (fn [acc area]
                                    (conj acc {area (map (fn [coord]
                                                           [coord (distance area coord)])
                                                         (:coords coord-map))}))
-                                 {}))}))
+                                 {}))
+         :infinity-coords (->> (:coord-area-boundary coord-map)
+                               (reduce (fn [acc area]
+                                         (conj acc {area (map (fn [coord]
+                                                                [coord (distance area coord)])
+                                                              (:coords coord-map))}))
+                                       {})
+                               (reduce (fn [acc obj]
+                                         (let [[f s] (->> (val obj)
+                                                          (sort-by second)
+                                                          (take 2))]
+                                           (conj acc (if (not= (second f) (second s))
+                                                       {(key obj) (first f)} {})))) {})
+                               vals
+                               set)}))
 
 (defn remove-far-distance
   [coord-map]
@@ -106,15 +129,19 @@
                                                                 {(key obj) (first f)} {})))) {}))}))
 
 (comment
-  (->> (get-sample-data "aoc2018_6.txt")
-       generate-coords-map
-       generate-all-distance-from-coords
-       remove-far-distance
-       :closest_coords
-       vals
-       frequencies
-       (sort-by val >)
-       (drop 4)))
+  (let [coord-data (->> (get-sample-data "aoc2018_6.txt")
+                        generate-coords-map
+                        generate-all-distance-from-coords
+                        remove-far-distance)
+        closest_coords (:closest_coords coord-data)
+        infinity-coords (:infinity-coords coord-data)]
+
+    (->> closest_coords
+         vals
+         frequencies
+         (sort-by val >)
+         (filter (fn [[k v]]
+                   (not (contains? infinity-coords k)))))))
 
 ;; 파트 2
 ;; 안전(safe) 한 지역은 근원지'들'로부터의 맨하탄거리(Manhattan distance, 격자를 상하좌우로만 움직일때의 최단 거리)의 '합'이 N 미만인 지역임.
