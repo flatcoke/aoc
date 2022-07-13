@@ -1,3 +1,8 @@
+(ns aoc2018_7
+  (:require [clojure.string :as string]
+            [clojure.set :as set]
+            [clojure.java.io :as io]))
+
 ;; # Day 7
 
 ;; [https://adventofcode.com/2018/day/7](https://adventofcode.com/2018/day/7)
@@ -37,6 +42,75 @@
 ;; 결과: `CABDFE`
 
 
+(defn parse-steps
+  "정규식으로 Step을 추출
+  input: Step B must be finished before step E can begin.
+  output: [B E]"
+  [str]
+  (let [[first second] (->> (re-matches #"Step ([A-Z]+) must be finished before step ([A-Z]+) can begin." str)
+                            (take-last 2))]
+    [first second]))
+
+(comment (parse-steps "Step B must be finished before step E can begin."))
+
+
+(defn get-sample-data [path]
+  (->> path
+       (io/resource)
+       (slurp)
+       (string/split-lines)))
+
+(defn get-requirement-step-map
+  "특정 스탭을 처리하기 위해서 필수로 처리해야하는 스탭들을 정리합니다.
+  input: ([C A] [C F] [A B] [A D] [B E] [D E] [F E])
+  output: {
+            E (B D F)
+            C []
+            F (C)
+            B (A)
+            A (C)
+            D (A)
+          }"
+  [input]
+  (let [default-step-map (->> input
+                              flatten
+                              set
+                              (#(for [step %] [step []]))
+                              (into {}))]
+
+    (reduce (fn [acc [step next-step]]
+              (assoc acc next-step (sort (conj (get acc next-step []) step))))
+            default-step-map input)))
+
+(defn generate-trace-step
+  "들어온 리스트를 제외한 가능한 작업을 나열하고 우선순위가 높은 일감을 처리 하는 작업을 반복"
+  [step-map trace]
+  (let [pre-step-map      (:pre-step-map step-map)
+        all-chraters      (:all-chraters step-map)
+        all-left-chraters (->> (set/difference all-chraters (set trace)) sort)
+
+        can-do-chraters   (->> all-left-chraters
+                               (filter (fn [c]
+                                         (empty? (set/difference
+                                                  (set (get pre-step-map c))
+                                                  (set trace))))))
+        current-step      (first can-do-chraters)
+        trace             (if (or (nil? current-step)
+                                  (contains? (set trace) current-step)) trace (conj trace current-step))]
+
+    (if (empty? can-do-chraters) trace (generate-trace-step step-map trace))))
+
+(comment
+  "part 1"
+  (let [input        (->> (get-sample-data "aoc2018_7.txt")
+                          (map parse-steps))
+        pre-step-map (get-requirement-step-map input)
+        step-map     {:pre-step-map pre-step-map
+                      :all-chraters (->> input flatten set)}]
+
+    (->> (generate-trace-step step-map [])
+         string/join)))
+
 ;; ## 파트 2
 
 ;; 파트 1에서는 일을 워커(worker)가 하나였지만, 파트 2는 5명. 즉, 동시에 5개의 일을 처리할 수 있게 됨.
@@ -45,6 +119,8 @@
 ;; 이 때, 주어진 모든 일을 처리하는데 걸리는 시간을 구하시오.
 
 ;; 예)
+
+;; CABDFE
 
 ;; 아래는 파트 1의 예시에서 워커가 2명이 된 케이스이다.
 ;; ```
@@ -62,8 +138,6 @@
 ;;   10        E          .       CABFD
 ;;   11        E          .       CABFD
 ;;   12        E          .       CABFD
-;;   13        E          .       CABFD
-;;   14        E          .       CABFD
-;;   15        .          .       CABFDE
+;;   14        E          .       CABFDE
 ;; ```
 ;; 15초가 걸리므로 답은 15
