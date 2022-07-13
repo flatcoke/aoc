@@ -85,20 +85,20 @@
 (defn generate-trace-step
   "들어온 리스트를 제외한 가능한 작업을 나열하고 우선순위가 높은 일감을 처리 하는 작업을 반복"
   [step-map trace]
-  (let [pre-step-map      (:pre-step-map step-map)
-        all-chraters      (:all-chraters step-map)
-        all-left-chraters (->> (set/difference all-chraters (set trace)) sort)
+  (let [pre-step-map   (:pre-step-map step-map)
+        all-steps      (:all-chraters step-map)
+        all-left-steps (->> (set/difference all-steps (set trace)) sort)
+        can-do-steps   (->> all-left-steps
+                            (filter (fn [c]
+                                      (empty? (set/difference
+                                               (set (get pre-step-map c))
+                                               (set trace))))))
+        current-step   (first can-do-steps)
+        trace          (if (or (nil? current-step)
+                               (contains? (set trace) current-step))
+                         trace (conj trace current-step))]
 
-        can-do-chraters   (->> all-left-chraters
-                               (filter (fn [c]
-                                         (empty? (set/difference
-                                                  (set (get pre-step-map c))
-                                                  (set trace))))))
-        current-step      (first can-do-chraters)
-        trace             (if (or (nil? current-step)
-                                  (contains? (set trace) current-step)) trace (conj trace current-step))]
-
-    (if (empty? can-do-chraters) trace (generate-trace-step step-map trace))))
+    (if (empty? can-do-steps) trace (generate-trace-step step-map trace))))
 
 (comment
   "part 1"
