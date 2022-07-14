@@ -75,7 +75,7 @@
   (let [default-step-map (->> input
                               flatten
                               set
-                              (#(for [step %] [step []]))
+                              (map #(vector % []))
                               (into {}))]
 
     (reduce (fn [acc [step next-step]]
@@ -96,7 +96,8 @@
         current-step   (first can-do-steps)
         trace          (if (or (nil? current-step)
                                (contains? (set trace) current-step))
-                         trace (conj trace current-step))]
+                         trace
+                         (conj trace current-step))]
     (if (empty? can-do-steps) trace (recur step-map trace))))
 
 (comment
