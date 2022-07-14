@@ -144,8 +144,6 @@
 ;;   14        E          .       CABFDE
 ;; ```
 ;; 15초가 걸리므로 답은 15
-(comment
-  (lazy-cat [1] [2]))
 
 (defn get-processing-second
   "처리 시간을 반환합니다. 
@@ -155,204 +153,122 @@
   [step]
   (- (int (.charAt step 0)) 4))
 
-(defn get-processing-second-test
-  "처리 시간을 반환합니다. 
-  input: A
-  output: 61
-  "
-  [step]
-  ;; (- (int (.charAt step 0)) 4))
-  (- (int (.charAt step 0)) 64))
-
 (defn create-workers
+  "pk, work, finished-time 값을 가지고 있는 워커를 반환합니다."
   [worker-count]
   (->> (range 1 (+ worker-count 1))
-       (map (fn [number] {:pk          number
-                          :step        nil
-                          ;; :start-time  0
-                          :finish-time 100}))))
-
-
-(defn find-idle-works
-  [workers]
-  (->> workers
-       (filter (fn [worker]
-                 (nil? (:step worker))))))
-
-(defn start-work
-  [workers current-time step]
-  (merge)
-  (conj (rest workers)
-        (assoc (first workers)
-               :step step
-               :finish-time (+ current-time (get-processing-second step)))))
-
-;; (defn clean-up-finished-steps
-;;   [workers current-time doing-steps done-steps]
-;;   filter workers
-
-
-;;   )
+       (map (fn [number] {:pk            number
+                          :work          nil
+                          :finished-time 0}))))
 
 (comment
   (get-processing-second "C")
-  (get-processing-second-test "C")
-  (create-workers 5)
-  (find-idle-works (create-workers 5))
-  (start-work (create-workers 5) 0 "A"))
-
-(comment
-  (iterate inc 1))
-
-(defn generate-trace-step-by-worker
-  "들어온 리스트를 제외한 가능한 작업을 나열하고 우선순위가 높은 일감을 처리 하는 작업을 반복"
-  [step-map done-steps doing-steps finished-steps current-time workers]
-  (let [pre-step-map   (:pre-step-map step-map)
-        all-steps      (:all-chraters step-map)
-        all-left-steps (->> (set/difference all-steps (set done-steps)) sort)
-        can-do-steps   (->> (merge all-left-steps)
-                            (filter (fn [c]
-                                      (empty? (set/difference
-                                               (set (get pre-step-map c))
-                                               (set done-steps))))))
-        current-step   (first can-do-steps)
-        trace          (if (or (nil? current-step)
-                               (contains? (set done-steps) current-step))
-                         done-steps (conj done-steps current-step))
-        current-time   (inc current-time)]
-
-
-    #_(if (and (not (seq? can-do-steps)) ;; 처리 해야하는 일이 없음
-               (= (count (find-idle-work workers)) (count workers)) ;; 일하는 사람이 없음
-               (empty? doing-steps) ;; 진행되고 있는 일이 없음 
-               )[current-time trace]
-
-          (if (empty? can-do-steps) trace (generate-trace-step-by-worker step-map trace doing-steps finished-steps current-time workers)))))
-
-
-(comment
-  (map (fn [x y] [x y]) [1 2 3] [4 5 6 7]))
+  (create-workers 5))
 
 (defn assign-works-to-iddle-workers
-  "일이 없는 워커에게 일을 할당함"
-  [workers steps current-time]
+  "일이 없는 워커에게 일을 할당하고 할당된 일감과 워커들을 반환합니다.
+  input: [[{:work A :finished-time 100} {:work nil :finished-time 0}] [B D F] 123]
+  output: [[{:work A :finished-time 100} {:work B :finished-time 125}] [B]]"
+  [workers works current-time]
 
-  (loop [workers     workers
-         left-works  steps
-         doing-works []]
+  (loop [workers        workers
+         left-works     works
+         assigned-works []]
     (if (or (empty? left-works)
             (empty? (filter (fn [worker]
-                              (nil? (:step worker))) workers)))
-      [workers  left-works doing-works]
+                              (nil? (:work worker))) workers)))
+      [workers assigned-works]
 
       (let [iddle-workers         (->> workers
                                        (filter (fn [worker]
-                                                 (nil? (:step worker)))))
+                                                 (nil? (:work worker)))))
             first-work            (first left-works)
             left-works            (rest left-works)
-
-            first-in-iddle-worker (assoc (first iddle-workers) :step first-work
+            first-in-iddle-worker (assoc (first iddle-workers) :work first-work
                                          :finished-time (+ (get-processing-second first-work)
                                                            current-time))
-            doing-works           (conj doing-works first-work)
+            assigned-works        (conj assigned-works first-work)
             left-in-iddle-worker  (rest iddle-workers)
             working-workers       (filter (fn [worker]
-                                            (not (nil? (:step worker))))
+                                            (not (nil? (:work worker))))
                                           workers)
             workers               (lazy-cat (list first-in-iddle-worker) left-in-iddle-worker working-workers)]
 
-        (recur workers left-works doing-works)))))
+        (recur workers left-works assigned-works)))))
 
 
 (comment (assign-works-to-iddle-workers [{:id            1
-                                          :step          "A"
+                                          :work          "A"
                                           :finished-time 3100}
                                          {:id            2
-                                          :step          nil
+                                          :work          nil
                                           :finished-time nil}
                                          {:id            3
-                                          :step          nil
+                                          :work          nil
                                           :finished-time 0}]
                                         ["Z" "D" "V"] 70))
 
-(defn clean-up-finished-steps-from-worker
+(defn clean-up-finished-works
+  "완료된 일감을 반환하고 워커들을 iddle 상태로 변경 합니다.
+  input: [{:work A :finished-time: 123}] 123
+  output: [{:work nil :finished-time: 0}] [A]"
   [workers current-time]
 
-  (let [finished-steps (->> workers
+  (let [finished-works (->> workers
                             (filter (fn [worker]
-                                      (not (nil? (:step worker)))))
+                                      (not (nil? (:work worker)))))
                             (reduce (fn [acc worker]
                                       (if (= current-time (:finished-time worker))
-                                        (conj acc (:step worker)) acc))
+                                        (conj acc (:work worker)) acc))
                                     []))
         workers        (map (fn [worker]
                               (if (= current-time (:finished-time worker))
-                                (assoc worker :step nil :finished-time 0) worker)) workers)]
+                                (assoc worker :work nil :finished-time 0) worker)) workers)]
 
-    [workers finished-steps]))
+    [workers finished-works]))
 
-(comment (clean-up-finished-steps-from-worker [{:id            1
-                                                :step          "A"
-                                                :finished-time 71}
-                                               {:id            2
-                                                :step          "B"
-                                                :finished-time 73}
-                                               {:id            3
-                                                :step          "C"
-                                                :finished-time 74}]
-                                              71))
-
+(comment (clean-up-finished-works [{:id            1
+                                    :work          "A"
+                                    :finished-time 71}
+                                   {:id            2
+                                    :work          "B"
+                                    :finished-time 73}
+                                   {:id            3
+                                    :work          "C"
+                                    :finished-time 74}]
+                                  71))
 
 (comment
   (type (concat #{"A" "C" "B"} #{"A" "B" "C" "D"})))
 
-
-(defn taemin
+(defn get-spending-time-by-workers
+  "할당된 워커 할 수 있는 일감을 처리합니다. 모든 작업이 마무리되면 작업시간을 반환합니다."
   [all-steps pre-step-map workers]
 
-  (loop [current-time 0
-         workers      workers
-         ;; 진행중 일감
-         doing-steps  #{}
-         ;; 완료된 일감
-         done-steps   #{}]
+  (loop [current-time   0
+         workers        workers
+         ongoing-works  #{}
+         finished-works #{}]
 
-    (let [;; 완료된 일감을 정리한다.
-          [workers just-finished-steps]               (clean-up-finished-steps-from-worker workers current-time)
-          done-steps                                  (set/union done-steps just-finished-steps)
-          can-do-steps                                (->> all-steps
-                                                           (filter (fn [c]
-                                                                     (empty? (set/difference
-                                                                              (set (get pre-step-map c))
-                                                                              (set done-steps))))))
-          can-do-steps                                (->> (set/difference (set (doall can-do-steps)) doing-steps) sort)
-          iddle-workers                               (find-idle-works workers)
-          startable-steps                             (->> (count iddle-workers))
+    (let [[workers just-finished-works] (clean-up-finished-works workers current-time)
+          finished-works                (set/union finished-works just-finished-works)
+          can-do-works                  (->> all-steps
+                                             (filter (fn [c]
+                                                       (empty? (set/difference
+                                                                (set (get pre-step-map c))
+                                                                (set finished-works))))))
+          can-do-works                  (->> (set/difference (set can-do-works) ongoing-works) sort)
+          [workers assigned-works]      (assign-works-to-iddle-workers workers can-do-works current-time)
+          ongoing-works                 (concat assigned-works ongoing-works)]
 
-
-          [workers not-assigned-works assigned-works] (assign-works-to-iddle-workers workers can-do-steps current-time)
-          doing-steps                                 (set (concat assigned-works doing-steps))]
-
-
-
-      #_(println {"current-time"   current-time
-                  "assigned-works" assigned-works
-                  "doing-steps"    doing-steps
-                  "done-steps"     done-steps
-                  "can-do-steps"   can-do-steps
-                  "iddle-workers"  iddle-workers})
-      (if (= (set done-steps) (set all-steps)) current-time
-      ;; (if (< 100 current-time) current-time
-          (recur (inc current-time) workers doing-steps done-steps)
-            ;; (recur (inc current-time) (list workers) doing-steps done-steps)
-            ;; (recur (inc current-time) [] [] [])
-          ))))
+      (if (= (set finished-works) all-steps) current-time
+          (recur (inc current-time) workers ongoing-works finished-works)))))
 
 (comment
-  "part 2"
+  "day7 part2"
   (let [input        (->> (get-sample-data "aoc2018_7.txt")
                           (map parse-steps))
         pre-step-map (get-requirement-step-map input)
         all-chraters (->> input flatten set)]
 
-    (->> (taemin all-chraters pre-step-map (create-workers 5)))))
+    (get-spending-time-by-workers all-chraters pre-step-map (create-workers 5))))
