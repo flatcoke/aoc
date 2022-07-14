@@ -180,20 +180,20 @@
                               (nil? (:work worker))) workers)))
       [workers assigned-works]
 
-      (let [iddle-workers         (->> workers
-                                       (filter (fn [worker]
-                                                 (nil? (:work worker)))))
-            first-work            (first left-works)
-            left-works            (rest left-works)
-            first-in-iddle-worker (assoc (first iddle-workers) :work first-work
-                                         :finished-time (+ (get-processing-second first-work)
-                                                           current-time))
-            assigned-works        (conj assigned-works first-work)
-            left-in-iddle-worker  (rest iddle-workers)
-            working-workers       (filter (fn [worker]
-                                            (not (nil? (:work worker))))
-                                          workers)
-            workers               (lazy-cat (list first-in-iddle-worker) left-in-iddle-worker working-workers)]
+      (let [iddle-workers      (->> workers
+                                    (filter (fn [worker]
+                                              (nil? (:work worker)))))
+            first-work         (first left-works)
+            left-works         (rest left-works)
+            assigned-worker    (assoc (first iddle-workers) :work first-work
+                                      :finished-time (+ (get-processing-second first-work)
+                                                        current-time))
+            assigned-works     (conj assigned-works first-work)
+            left-iddle-workers (rest iddle-workers)
+            working-workers    (filter (fn [worker]
+                                         (not (nil? (:work worker))))
+                                       workers)
+            workers            (concat (list assigned-worker) left-iddle-workers working-workers)]
 
         (recur workers left-works assigned-works)))))
 
