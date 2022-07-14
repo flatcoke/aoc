@@ -59,6 +59,7 @@
     (conj trace c)))
 
 (comment
+  "day5 part1"
   (->>
    (get-sample-data "aoc2018_5.txt")
    (reduce remove-pair [])
@@ -81,6 +82,7 @@
       (string/replace (string/upper-case (str word)) "")))
 
 (comment
+  "day5 part2"
   (let [input-data    (get-sample-data "aoc2018_5.txt")
         chars         (char-range \a \z)
         count-results (map (fn [c]
