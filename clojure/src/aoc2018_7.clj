@@ -195,8 +195,8 @@
 ;;   )
 
 (comment
-  (get-processing-second "A")
-  (get-processing-second-test "A")
+  (get-processing-second "C")
+  (get-processing-second-test "C")
   (create-workers 5)
   (find-idle-works (create-workers 5))
   (start-work (create-workers 5) 0 "A"))
@@ -252,7 +252,7 @@
             left-works            (rest left-works)
 
             first-in-iddle-worker (assoc (first iddle-workers) :step first-work
-                                         :finished-time (+ (get-processing-second-test first-work)
+                                         :finished-time (+ (get-processing-second first-work)
                                                            current-time))
             doing-works           (conj doing-works first-work)
             left-in-iddle-worker  (rest iddle-workers)
@@ -317,35 +317,36 @@
          ;; 완료된 일감
          done-steps   #{}]
 
-    (if (= done-steps (set all-steps)) current-time
-        (let [can-do-steps                                (->> all-steps
-                                                               (filter (fn [c]
-                                                                         (empty? (set/difference
-                                                                                  (set (get pre-step-map c))
-                                                                                  done-steps))))
-                                                               (#(set/difference % (set doing-steps)))
-                                                               sort)
-              iddle-workers                               (find-idle-works workers)
-              startable-steps                             (->> (count iddle-workers))
+    (let [;; 완료된 일감을 정리한다.
+          [workers just-finished-steps]               (clean-up-finished-steps-from-worker workers current-time)
+          done-steps                                  (set/union done-steps just-finished-steps)
+          can-do-steps                                (->> all-steps
+                                                           (filter (fn [c]
+                                                                     (empty? (set/difference
+                                                                              (set (get pre-step-map c))
+                                                                              (set done-steps))))))
+          can-do-steps                                (->> (set/difference (set (doall can-do-steps)) doing-steps) sort)
+          iddle-workers                               (find-idle-works workers)
+          startable-steps                             (->> (count iddle-workers))
 
 
-              [workers not-assigned-works assigned-works] (assign-works-to-iddle-workers workers can-do-steps current-time)
-              doing-steps                                 (assigned-works doing-steps)
-
-              ;; 완료된 일감을 정리한다.
-              [workers just-finished-steps]               (clean-up-finished-steps-from-worker workers current-time)
-              done-steps                                  (set/union done-steps just-finished-steps)]
+          [workers not-assigned-works assigned-works] (assign-works-to-iddle-workers workers can-do-steps current-time)
+          doing-steps                                 (set (concat assigned-works doing-steps))]
 
 
 
-          (println (type assigned-works) (type doing-steps))
-          (println (type workers))
-        ;; 새로운 일감을 배정한다. 
-          (if (> 10 current-time)
-            (recur (inc current-time) workers  doing-steps [])
+      #_(println {"current-time"   current-time
+                  "assigned-works" assigned-works
+                  "doing-steps"    doing-steps
+                  "done-steps"     done-steps
+                  "can-do-steps"   can-do-steps
+                  "iddle-workers"  iddle-workers})
+      (if (= (set done-steps) (set all-steps)) current-time
+      ;; (if (< 100 current-time) current-time
+          (recur (inc current-time) workers doing-steps done-steps)
             ;; (recur (inc current-time) (list workers) doing-steps done-steps)
             ;; (recur (inc current-time) [] [] [])
-            current-time)))))
+          ))))
 
 (comment
   "part 2"
@@ -354,4 +355,4 @@
         pre-step-map (get-requirement-step-map input)
         all-chraters (->> input flatten set)]
 
-    (->> (taemin all-chraters pre-step-map (create-workers 2)))))
+    (->> (taemin all-chraters pre-step-map (create-workers 5)))))
