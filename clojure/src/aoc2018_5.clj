@@ -31,35 +31,8 @@
     output false"
   [a b]
   (->> (- (int (.charAt a 0)) (int (.charAt b 0)))
-       Math/abs
+       abs
        (= 32)))
-
-(defn remove-pair-word
-  [coll index]
-  (into (subvec coll 0 index) (subvec coll (+ index 2))))
-
-
-(defn remove-pair-recursive
-  [v-words index]
-  (if-not (< index (- (count v-words) 1))
-    v-words
-    (if (is-pair-alphabet (nth v-words index) (nth v-words (+ index 1)))
-      (if (= index 0)
-        (remove-pair-recursive (remove-pair-word v-words index) 0)
-        (remove-pair-recursive (remove-pair-word v-words index) (- index 1)))
-      (remove-pair-recursive v-words (+ index 1)))))
-
-(comment
-  (get-sample-data "aoc2018_5.txt"))
-
-(comment
-  ;; (->> (abc (string/split (get-sample-data "aoc2018_5.txt") #"") 0)
-  (->> (remove-pair-recursive (string/split "dabAcCaCBAcCcaDA" #"") 0)
-       (string/join #"")
-       count))
-
-
-;; version2
 
 (defn is-pair-alphabet?
   "같은 문자에 대문주 소문자인지를 검사한다.
@@ -74,7 +47,7 @@
     output false"
   [a b]
   (->> (- (int a) (int b))
-       Math/abs
+       abs
        (= 32)))
 
 (defn remove-pair
@@ -101,14 +74,19 @@
 (defn char-range [start end]
   (map char (range (int start) (inc (int end)))))
 
+
+(defn remove-specific-word-in-sentence
+  [sentence  word]
+  (-> (string/replace sentence (str word) "")
+      (string/replace (string/upper-case (str word)) "")))
+
 (comment
-  (let [input-data (get-sample-data "aoc2018_5.txt")]
-  ;; (let [input-data "dabAcCaCBAcCcaDA"]
-    (->> (char-range \a \z)
-         (map (fn [c]
-                c
-                (->> (-> (string/replace input-data (str c) "")
-                         (string/replace (string/upper-case (str c)) ""))
-                     (reduce remove-pair [])
-                     count)))
-         (apply min))))
+  (let [input-data    (get-sample-data "aoc2018_5.txt")
+        chars         (char-range \a \z)
+        count-results (map (fn [c]
+                             c
+                             (->> (remove-specific-word-in-sentence input-data c)
+                                  (reduce remove-pair [])
+                                  count)) chars)
+        min-count     (apply min count-results)]
+    min-count))
