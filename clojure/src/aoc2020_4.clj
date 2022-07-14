@@ -59,7 +59,6 @@
   [passport-map]
   (s/valid? :v/passport passport-map))
 
-
 (comment
   (into {} [`(1 2) `(2 3) `(3 4)]))
 
@@ -77,14 +76,14 @@
   "string을 파싱하여 map형태로 변환
    input: iyr:2013 hcl:#ceb3a1 hgt:151cm eyr:2030 byr:1943 ecl:grn
    output: {:iyr 2013, :hcl #ceb3a1, :hgt 151cm, :eyr 2030, :byr 1943, :ecl grn}"
-  [s-passport]
+  [prefix s-passport]
   (->> (#(partition 2 (clojure.string/split s-passport #"[: ]")))
-       (map (fn [[key value]] [(keyword (str "passport" "/" key)) value]))
+       (map (fn [[key value]] [(keyword (str prefix "/" key)) value]))
        (into {})))
 
 (comment
   (->> (get-sample-data "aoc2020_4.txt")
-       (map string-passport-to-passport-map)
+       (map (partial string-passport-to-passport-map "passport"))
        (filter is-valid-passport?)
        count))
 
@@ -122,3 +121,23 @@
 ;; pid invalid: 0123456789
 ;; ```
 ;; 모든 필드의 기준에 맞는 여권의 수를 반환하여라.
+
+(defn convert-year-to-int
+  [passport]
+
+  (for [key [:passport/byr :passport/iyr :passport/eyr]]
+    (println (get passport key))
+    #_(let [passport (assoc passport key (Integer/parseInt (get passport key)))]
+
+        (println (get passport key))
+        passport)))
+
+
+(comment
+  (->> (get-sample-data "aoc2020_4.txt")
+       (map (partial string-passport-to-passport-map "passport"))
+       (map convert-year-to-int)))
+
+(comment
+  (for [key [:byr :iyr :eyr]]
+    key))
