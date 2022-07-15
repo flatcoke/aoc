@@ -29,6 +29,13 @@
 
 ;; 예) 2020 = 979 + 366 + 675, 곱하면 241861950 을 출력
 
-
-
-
+(comment
+  (let [input  (get-sample-data "aoc2020_1.txt")]
+    (->> (for [x input
+               y input
+               z input]
+           (sort [x y z]))
+         set
+         (filter (fn [[x y z]] (= (+ x y z) 2020)))
+         first
+         (apply *))))
