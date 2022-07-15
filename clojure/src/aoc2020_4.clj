@@ -44,18 +44,18 @@
 
 
 (s/def :v/passport
-  (s/keys :req [:passport/byr
-                :passport/iyr
-                :passport/eyr
-                :passport/hgt
-                :passport/hcl
-                :passport/ecl
-                :passport/pid]
-          :opt [:passport/cid]))
+  (s/keys :req-un [:passport/byr
+                   :passport/iyr
+                   :passport/eyr
+                   :passport/hgt
+                   :passport/hcl
+                   :passport/ecl
+                   :passport/pid]
+          :opt-un [:passport/cid]))
 
 (s/def :animal/common (s/keys :req [:animal/kind :animal/says]))
 
-(defn is-valid-passport?
+(defn is-valid-keys-passport?
   [passport-map]
   (s/valid? :v/passport passport-map))
 
@@ -76,15 +76,15 @@
   "string을 파싱하여 map형태로 변환
    input: iyr:2013 hcl:#ceb3a1 hgt:151cm eyr:2030 byr:1943 ecl:grn
    output: {:iyr 2013, :hcl #ceb3a1, :hgt 151cm, :eyr 2030, :byr 1943, :ecl grn}"
-  [prefix s-passport]
+  [s-passport]
   (->> (#(partition 2 (clojure.string/split s-passport #"[: ]")))
-       (map (fn [[key value]] [(keyword (str prefix "/" key)) value]))
+       (map (fn [[key value]] [(keyword key) value]))
        (into {})))
 
 (comment
   (->> (get-sample-data "aoc2020_4.txt")
-       (map (partial string-passport-to-passport-map "passport"))
-       (filter is-valid-passport?)
+       (map string-passport-to-passport-map)
+       (filter is-valid-keys-passport?)
        count))
 
 ;; ## 파트 2
@@ -122,22 +122,83 @@
 ;; ```
 ;; 모든 필드의 기준에 맞는 여권의 수를 반환하여라.
 
-(defn convert-year-to-int
+(defn convert-str-to-height
+  "str로 되어있는 값을 height unit으로 구분
+  input: 190cm
+  output: [190 cm]"
+  [s]
+  (if-let [[_ height unit]
+           (re-matches #"([0-9]+)(in|cm)" s)]
+    [(Integer/parseInt height) unit]
+    nil))
+
+(defn is-valid-hgt?
+  "cm in 에 따라서 범위를 다르게 검사"
+  [[height unit]]
+  (case unit
+    "cm" (s/int-in-range? 150 (+ 193 1) height)
+    "in" (s/int-in-range? 59 (+ 76 1) height)
+    false))
+
+(defn is-valid-pid?
+  "숫자 9자리인지 검사"
+  [pid]
+  (when pid
+    (re-matches #"[0-9]{9}" pid)))
+
+(defn is-valid-hcl?
+  "color hex코드인지 확인"
+  [heir-color]
+  (when heir-color
+    (re-matches #"#[0-9|a-f]{6}" heir-color)))
+
+(s/def :p/passport
+  (s/keys :req-un [:p/byr
+                   :p/iyr
+                   :p/eyr
+                   :p/hgt
+                   :p/hcl
+                   :p/ecl
+                   :p/pid]
+          :opt-un [:p/cid]))
+
+(s/def :p/byr #(s/int-in-range? 1920 (+ 2002 1) %))
+(s/def :p/iyr #(s/int-in-range? 2010 (+ 2020 1) %))
+(s/def :p/eyr #(s/int-in-range? 2020 (+ 2030 1) %))
+(s/def :p/hgt #(is-valid-hgt? %))
+(s/def :p/pid #(is-valid-pid? %))
+(s/def :p/hcl #(is-valid-hcl? %))
+(s/def :p/ecl #{"amb" "blu" "brn" "gry" "grn" "hzl" "oth"})
+
+(defn is-valid-passport?
   [passport]
+  (s/valid? :p/passport passport))
 
-  (for [key [:passport/byr :passport/iyr :passport/eyr]]
-    (println (get passport key))
-    #_(let [passport (assoc passport key (Integer/parseInt (get passport key)))]
+(comment
+  (is-valid-passport? {:ecl "brn"
+                       :pid "160033328"
+                       :eyr 2030
+                       :hcl "#ffffff"
+                       :byr 2002
+                       :iyr 2020
+                       :cid 147
+                       :hgt [190 "cm"]}))
 
-        (println (get passport key))
-        passport)))
-
+(defn parse-passport
+  "str로 돼 있는 값들을 검증하기 전에 타입을 맞춥니다."
+  [passport]
+  (->> passport
+       (map (fn [[k v]] [k v]
+              (case k
+                (:byr :iyr :eyr) [k (Integer/parseInt v)]
+                :hgt [k (convert-str-to-height v)]
+                [k v])))
+       (into {})
+       (merge passport)))
 
 (comment
   (->> (get-sample-data "aoc2020_4.txt")
-       (map (partial string-passport-to-passport-map "passport"))
-       (map convert-year-to-int)))
-
-(comment
-  (for [key [:byr :iyr :eyr]]
-    key))
+       (map string-passport-to-passport-map)
+       (map parse-passport)
+       (filter is-valid-passport?)
+       count))
