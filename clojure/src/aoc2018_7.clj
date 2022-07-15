@@ -243,8 +243,8 @@
   (type (concat #{"A" "C" "B"} #{"A" "B" "C" "D"})))
 
 (defn get-spending-time-by-workers
-  "할당된 워커 할 수 있는 일감을 처리합니다. 모든 작업이 마무리되면 작업시간을 반환합니다."
-  [[current-time pre-work-map all-works workers ongoing-works finished-works]]
+  "완료된 일감을 정리하고 처리할 일감을 할당합니다."
+  [[current-time all-works finished-works ongoing-works workers pre-work-map]]
 
   (let [[workers just-finished-works] (clean-up-finished-works workers current-time)
         finished-works                (set/union finished-works just-finished-works)
@@ -257,7 +257,7 @@
         [workers assigned-works]      (assign-works-to-iddle-workers workers can-do-works current-time)
         ongoing-works                 (concat assigned-works ongoing-works)]
 
-    [(inc current-time) pre-work-map all-works workers ongoing-works finished-works]))
+    [(inc current-time) all-works finished-works ongoing-works workers pre-work-map]))
 
 (comment
   "day7 part2"
@@ -266,7 +266,8 @@
         pre-step-map (get-requirement-step-map input)
         all-chraters (->> input flatten set)]
 
-    (->> [0 pre-step-map all-chraters (create-workers 5) [] []]
+    (->> [0 all-chraters [] [] (create-workers 5) pre-step-map]
          (iterate get-spending-time-by-workers)
-         (drop-while (fn [[_ _ all-works _ _ finished-works]] (not= (set all-works) (set finished-works))))
+         (drop-while (fn [[_ all-works finished-works _ _ _]]
+                       (not= (set all-works) (set finished-works))))
          ffirst)))
