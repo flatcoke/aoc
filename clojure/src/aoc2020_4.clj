@@ -41,8 +41,6 @@
 ;; - 세번째는 cid가 없지만, ** cid는 없어도 되는 ** 것으로 간주한다. 그래서 유효하다.
 ;; - 네번째는 cid와 byr이 없다. byr은 반드시 있어야하는 필드이므로 유효하지 않다.
 
-
-
 (s/def :v/passport
   (s/keys :req-un [:passport/byr
                    :passport/iyr
