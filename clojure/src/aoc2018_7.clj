@@ -191,7 +191,7 @@
             assigned-works     (conj assigned-works first-work)
             left-iddle-workers (rest iddle-workers)
             working-workers    (filter (fn [worker]
-                                         (not (nil? (:work worker))))
+                                         (some? (:work worker)))
                                        workers)
             workers            (concat (list assigned-worker) left-iddle-workers working-workers)]
 
@@ -244,26 +244,20 @@
 
 (defn get-spending-time-by-workers
   "할당된 워커 할 수 있는 일감을 처리합니다. 모든 작업이 마무리되면 작업시간을 반환합니다."
-  [all-steps pre-step-map workers]
+  [[current-time pre-work-map all-works workers ongoing-works finished-works]]
 
-  (loop [current-time   0
-         workers        workers
-         ongoing-works  #{}
-         finished-works #{}]
+  (let [[workers just-finished-works] (clean-up-finished-works workers current-time)
+        finished-works                (set/union finished-works just-finished-works)
+        can-do-works                  (->> all-works
+                                           (filter (fn [c]
+                                                     (empty? (set/difference
+                                                              (set (get pre-work-map c))
+                                                              (set finished-works))))))
+        can-do-works                  (->> (set/difference (set can-do-works) ongoing-works) sort)
+        [workers assigned-works]      (assign-works-to-iddle-workers workers can-do-works current-time)
+        ongoing-works                 (concat assigned-works ongoing-works)]
 
-    (let [[workers just-finished-works] (clean-up-finished-works workers current-time)
-          finished-works                (set/union finished-works just-finished-works)
-          can-do-works                  (->> all-steps
-                                             (filter (fn [c]
-                                                       (empty? (set/difference
-                                                                (set (get pre-step-map c))
-                                                                (set finished-works))))))
-          can-do-works                  (->> (set/difference (set can-do-works) ongoing-works) sort)
-          [workers assigned-works]      (assign-works-to-iddle-workers workers can-do-works current-time)
-          ongoing-works                 (concat assigned-works ongoing-works)]
-
-      (if (= (set finished-works) all-steps) current-time
-          (recur (inc current-time) workers ongoing-works finished-works)))))
+    [(inc current-time) pre-work-map all-works workers ongoing-works finished-works]))
 
 (comment
   "day7 part2"
@@ -272,4 +266,7 @@
         pre-step-map (get-requirement-step-map input)
         all-chraters (->> input flatten set)]
 
-    (get-spending-time-by-workers all-chraters pre-step-map (create-workers 5))))
+    (->> [0 pre-step-map all-chraters (create-workers 5) [] []]
+         (iterate get-spending-time-by-workers)
+         (drop-while (fn [[_ _ all-works _ _ finished-works]] (not= (set all-works) (set finished-works))))
+         ffirst)))
