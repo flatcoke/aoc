@@ -244,7 +244,7 @@
 
 (defn get-spending-time-by-workers
   "완료된 일감을 정리하고 처리할 일감을 할당합니다."
-  [[current-time all-works finished-works ongoing-works workers pre-work-map]]
+  [{:keys [current-time all-works finished-works ongoing-works workers pre-work-map]}]
 
   (let [[workers just-finished-works] (clean-up-finished-works workers current-time)
         finished-works                (set/union finished-works just-finished-works)
@@ -257,17 +257,28 @@
         [workers assigned-works]      (assign-works-to-iddle-workers workers can-do-works current-time)
         ongoing-works                 (concat assigned-works ongoing-works)]
 
-    [(inc current-time) all-works finished-works ongoing-works workers pre-work-map]))
+    {:current-time   (inc current-time)
+     :all-works      all-works
+     :finished-works finished-works
+     :ongoing-works  ongoing-works
+     :workers        workers
+     :pre-work-map   pre-work-map}))
 
 (comment
   "day7 part2"
   (let [input        (->> (get-sample-data "aoc2018_7.txt")
                           (map parse-steps))
-        pre-step-map (get-requirement-step-map input)
-        all-chraters (->> input flatten set)]
+        pre-work-map (get-requirement-step-map input)
+        all-works    (->> input flatten set)]
 
-    (->> [0 all-chraters [] [] (create-workers 5) pre-step-map]
+    (->> {:current-time   0
+          :all-works      all-works
+          :finished-works []
+          :ongoing-works  []
+          :workers        (create-workers 5)
+          :pre-work-map   pre-work-map}
          (iterate get-spending-time-by-workers)
-         (drop-while (fn [[_ all-works finished-works _ _ _]]
+         (drop-while (fn [{:keys [all-works finished-works]}]
                        (not= (set all-works) (set finished-works))))
-         ffirst)))
+         first
+         :current-time)))
