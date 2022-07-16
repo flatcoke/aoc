@@ -168,20 +168,6 @@
 (s/def :p/hcl #(is-valid-hcl? %))
 (s/def :p/ecl #{"amb" "blu" "brn" "gry" "grn" "hzl" "oth"})
 
-(defn is-valid-passport?
-  [passport]
-  (s/valid? :p/passport passport))
-
-(comment
-  (is-valid-passport? {:ecl "brn"
-                       :pid "160033328"
-                       :eyr 2030
-                       :hcl "#ffffff"
-                       :byr 2002
-                       :iyr 2020
-                       :cid 147
-                       :hgt [190 "cm"]}))
-
 (defn parse-passport
   "str로 돼 있는 값들을 검증하기 전에 타입을 맞춥니다."
   [passport]
@@ -198,5 +184,5 @@
   (->> (get-sample-data "aoc2020_4.txt")
        (map string-passport-to-passport-map)
        (map parse-passport)
-       (filter is-valid-passport?)
+       (filter #(s/valid? :p/passport %))
        count))
