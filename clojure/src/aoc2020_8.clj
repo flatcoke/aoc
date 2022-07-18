@@ -80,11 +80,11 @@
                             (parse-input))]
     (->> {:index          0
           :acc            0
-          :trace          []
+          :trace          #{}
           :sorted-actions sorted-actions}
          (iterate calcurate-acc-by-index)
          (drop-while (fn [{:keys [index trace]}]
-                       (not (contains? (set trace) index))))
+                       (not (contains? trace index))))
          first
          :acc)))
 
@@ -114,11 +114,11 @@
   [input]
   (->> {:index          0
         :acc            0
-        :trace          []
+        :trace          #{}
         :sorted-actions input}
        (iterate calcurate-acc-by-index)
        (drop-while (fn [{:keys [index trace sorted-actions]}]
-                     (and (not (contains? (set trace) index))
+                     (and (not (contains? trace index))
                           (not= (inc index) (count sorted-actions)))))
        first))
 
