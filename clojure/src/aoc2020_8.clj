@@ -37,42 +37,55 @@
 ;; ```
 ;; 이 지시들은 무한히 반복된다.
 
+;; 한 지시가 정확히 **두번 실행되는 시점 바로 전**의 acc의 값을 반환하라.
+;; 위의 예시에선 acc +1이 8번째 틱에서 정확히 두번 실행되고, 이 때의 acc의 값은 5이다.
+
 (defn get-sample-data [path]
   (->> path
        (io/resource)
        (slurp)
-       (string/split-lines)
-       (map-indexed (fn [index line]
-                      (let [[action value] (string/split line #" ")]
-                        [index action (Integer/parseInt value)])))))
+       (string/split-lines)))
 
-(defn get-acc-before-duplicated-trace
+(defn parse-input [input]
+  (->> (map (fn [line]
+              (let [[action value] (string/split line #" ")]
+                [action (Integer/parseInt value)]))
+            input)
+       (into [])))
+
+(defn calcurate-acc-by-index
   "반복 순환 구조 전까지 계산된 값을 반환합니다."
-  [input]
-  (loop [i     0
-         acc   0
-         trace #{}]
+  [{:keys [index acc trace sorted-actions]}]
 
-    (let [[index action value] (nth input i)]
-      (if (contains? trace index)
-        acc
-        (cond
-          (= action "acc")
-          (recur (inc i) (+ acc value) (conj trace index))
-          (= action "jmp")
-          (recur (+ i value) acc (conj trace index))
-          (= action "nop")
-          (recur (inc i) acc (conj trace index)))))))
+  (let [[action value] (nth sorted-actions index)]
+    (cond
+      (= action "acc")
+      {:index          (inc index)
+       :acc            (+ acc value)
+       :trace          (conj trace index)
+       :sorted-actions sorted-actions}
+      (= action "jmp")
+      {:index          (+ index value)
+       :acc            acc
+       :trace          (conj trace index)
+       :sorted-actions sorted-actions}
+      (= action "nop")
+      {:index          (inc index)
+       :acc            acc
+       :trace          (conj trace index)
+       :sorted-actions sorted-actions})))
 
 (comment
-  (->> (into [] (get-sample-data "aoc2020_8.txt"))
-       (get-acc-before-duplicated-trace)))
-
-
-
-;; 한 지시가 정확히 **두번 실행되는 시점 바로 전**의 acc의 값을 반환하라.
-;; 위의 예시에선 acc +1이 8번째 틱에서 정확히 두번 실행되고, 이 때의 acc의 값은 5이다.
-
+  (let [sorted-actions (->> (get-sample-data "aoc2020_8.txt")
+                            (parse-input))]
+    (->> {:index          0
+          :acc            0
+          :trace          []
+          :sorted-actions sorted-actions}
+         (iterate calcurate-acc-by-index)
+         (drop-while (fn [{:keys [index trace]}]
+                       (not (contains? (set trace) index))))
+         first)))
 
 
 ;; ## 파트 2
