@@ -17,6 +17,10 @@
        (map #(Integer/parseInt %))))
 
 (comment
+  "2020 day1 part1
+   map을 돌면서 2가지로 조합할 수 있는 모든 경우의 수를 list로 만든 후 
+   해당 값이 곱이 2020인 경우를 필터링 
+   "
   (let [input  (get-sample-data "aoc2020_1.txt")]
     (->> (map (fn [x] (map (fn [y] [x y]) input)) input)
          (apply concat)
@@ -30,6 +34,9 @@
 ;; 예) 2020 = 979 + 366 + 675, 곱하면 241861950 을 출력
 
 (comment
+  "2020 day1 part2
+   for를 이용하여 3가지 수의 모든 경우를 list로 만들어 
+   3개의 곱이 2020인 경우로 필터링 함"
   (let [input  (get-sample-data "aoc2020_1.txt")]
     (->> (for [x input
                y input
