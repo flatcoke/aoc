@@ -49,7 +49,7 @@
 (defn parse-input [input]
   (->> (map-indexed (fn [index line]
                       (let [[action value] (string/split line #" ")]
-                        [index action (Integer/parseInt value)]))
+                        [index action (Integer/parseInt value)])) ;; keyword
                     input)
        (into [])))
 
@@ -59,7 +59,7 @@
 
   (let [[_ action value] (nth sorted-actions index)]
     (cond
-      (= action "acc")
+      (= action "acc") ;keyword
       {:index          (inc index)
        :acc            (+ acc value)
        :trace          (conj trace index)
@@ -128,7 +128,7 @@
                             (parse-input))]
 
     (->> sorted-actions
-         (filter (fn [[_ action]] (not= action "acc")))
+         (filter (fn [[_ action]] (not= action "acc"))) ;; 2가지를 함수로 묶음 
          (map (fn [[index action value]]
                 (let [actions (if (= action "jmp")
                                 (assoc sorted-actions index [index "nop" value])
