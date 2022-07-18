@@ -41,7 +41,7 @@
     (->> (for [x input
                y input
                z input]
-           (sort [x y z]))
+           (sort [x y z])) ;; 조건을 여서 추가 
          set
          (filter (fn [[x y z]] (= (+ x y z) 2020)))
          first
