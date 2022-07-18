@@ -22,9 +22,11 @@
    해당 값이 곱이 2020인 경우를 필터링 
    "
   (let [input  (get-sample-data "aoc2020_1.txt")]
-    (->> (map (fn [x] (map (fn [y] [x y]) input)) input)
-         (apply concat)
-         (filter (fn [[x y]] (= (+ x y) 2020)))
+    (->> (for [x     input
+               y     input
+               :when (= (+ x y) 2020)]
+           (sort [x y]))
+         set
          first
          (apply *))))
 
@@ -38,11 +40,11 @@
    for를 이용하여 3가지 수의 모든 경우를 list로 만들어 
    3개의 곱이 2020인 경우로 필터링 함"
   (let [input  (get-sample-data "aoc2020_1.txt")]
-    (->> (for [x input
-               y input
-               z input]
-           (sort [x y z])) ;; 조건을 여서 추가 
+    (->> (for [x     input
+               y     input
+               z     input
+               :when (= (+ x y z) 2020)]
+           (sort [x y z]))
          set
-         (filter (fn [[x y z]] (= (+ x y z) 2020)))
          first
          (apply *))))
