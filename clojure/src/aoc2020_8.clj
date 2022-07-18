@@ -108,7 +108,9 @@
 ;; 위의 예시에서, "여기!" 라고 표기된 곳이 jmp에서 nop로 바뀌면, 지시는 무한히 반복하지 않고 마지막에 6을 반환하며 종료된다.
 ;; 프로그램이 종료되는 시점의 accumulator의 값을 반환하여라.
 
-(defn taemin
+(defn calculate-acc-until-done-or-duplicated
+  "input 으로 받은 값을 하나씩 계산한다 
+   이미 계산된 값이거나 모든 계산이 완료되면 값을 반환"
   [input]
   (->> {:index          0
         :acc            0
@@ -121,14 +123,17 @@
        first))
 
 (comment
+  "2020 day8 part2"
   (let [sorted-actions (->> (get-sample-data "aoc2020_8.txt")
                             (parse-input))]
+
     (->> sorted-actions
-         (reduce (partial (fn [s-actions acc [index action value]]
-                            (let [actions (case action
-                                            "nop" (assoc s-actions index [index "jmp" value])
-                                            "jmp" (assoc s-actions index [index "nop" value])
-                                            nil)
-                                  result  (if (nil? actions) nil (taemin actions))
-                                  i       (:index result)]
-                              (if (= i (- (count s-actions) 1)) (println "taemin" result) ""))) sorted-actions) []))))
+         (filter (fn [[_ action]] (not= action "acc")))
+         (map (fn [[index action value]]
+                (let [actions (if (= action "jmp")
+                                (assoc sorted-actions index [index "nop" value])
+                                (assoc sorted-actions index [index "jmp" value]))]
+                  (calculate-acc-until-done-or-duplicated actions))))
+         (filter #(= (:index %) (- (count sorted-actions) 1)))
+         first
+         :acc)))
