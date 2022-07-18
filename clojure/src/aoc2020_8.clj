@@ -47,17 +47,17 @@
        (string/split-lines)))
 
 (defn parse-input [input]
-  (->> (map (fn [line]
-              (let [[action value] (string/split line #" ")]
-                [action (Integer/parseInt value)]))
-            input)
+  (->> (map-indexed (fn [index line]
+                      (let [[action value] (string/split line #" ")]
+                        [index action (Integer/parseInt value)]))
+                    input)
        (into [])))
 
 (defn calcurate-acc-by-index
   "반복 순환 구조 전까지 계산된 값을 반환합니다."
   [{:keys [index acc trace sorted-actions]}]
 
-  (let [[action value] (nth sorted-actions index)]
+  (let [[_ action value] (nth sorted-actions index)]
     (cond
       (= action "acc")
       {:index          (inc index)
@@ -85,7 +85,8 @@
          (iterate calcurate-acc-by-index)
          (drop-while (fn [{:keys [index trace]}]
                        (not (contains? (set trace) index))))
-         first)))
+         first
+         :acc)))
 
 
 ;; ## 파트 2
@@ -106,3 +107,28 @@
 
 ;; 위의 예시에서, "여기!" 라고 표기된 곳이 jmp에서 nop로 바뀌면, 지시는 무한히 반복하지 않고 마지막에 6을 반환하며 종료된다.
 ;; 프로그램이 종료되는 시점의 accumulator의 값을 반환하여라.
+
+(defn taemin
+  [input]
+  (->> {:index          0
+        :acc            0
+        :trace          []
+        :sorted-actions input}
+       (iterate calcurate-acc-by-index)
+       (drop-while (fn [{:keys [index trace sorted-actions]}]
+                     (and (not (contains? (set trace) index))
+                          (not= (inc index) (count sorted-actions)))))
+       first))
+
+(comment
+  (let [sorted-actions (->> (get-sample-data "aoc2020_8.txt")
+                            (parse-input))]
+    (->> sorted-actions
+         (reduce (partial (fn [s-actions acc [index action value]]
+                            (let [actions (case action
+                                            "nop" (assoc s-actions index [index "jmp" value])
+                                            "jmp" (assoc s-actions index [index "nop" value])
+                                            nil)
+                                  result  (if (nil? actions) nil (taemin actions))
+                                  i       (:index result)]
+                              (if (= i (- (count s-actions) 1)) (println "taemin" result) ""))) sorted-actions) []))))
