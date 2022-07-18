@@ -49,7 +49,7 @@
 (defn parse-input [input]
   (->> (map-indexed (fn [index line]
                       (let [[action value] (string/split line #" ")]
-                        [index action (Integer/parseInt value)])) ;; keyword
+                        [index (keyword action) (Integer/parseInt value)])) ;; keyword
                     input)
        (into [])))
 
@@ -58,18 +58,18 @@
   [{:keys [index acc trace sorted-actions]}]
 
   (let [[_ action value] (nth sorted-actions index)]
-    (cond
-      (= action "acc") ;keyword
+    (case action
+      :acc
       {:index          (inc index)
        :acc            (+ acc value)
        :trace          (conj trace index)
        :sorted-actions sorted-actions}
-      (= action "jmp")
+      :jmp
       {:index          (+ index value)
        :acc            acc
        :trace          (conj trace index)
        :sorted-actions sorted-actions}
-      (= action "nop")
+      :nop
       {:index          (inc index)
        :acc            acc
        :trace          (conj trace index)
@@ -122,18 +122,24 @@
                           (not= (inc index) (count sorted-actions)))))
        first))
 
+
+(defn generate-all-cases
+  [actions]
+  (->> actions
+       (filter (fn [[_ action]] (not= action "acc")))
+       (map (fn [[index action value]]
+              (if (= action "jmp")
+                (assoc actions index [index "nop" value])
+                (assoc actions index [index "jmp" value]))))))
+
 (comment
   "2020 day8 part2"
   (let [sorted-actions (->> (get-sample-data "aoc2020_8.txt")
                             (parse-input))]
 
     (->> sorted-actions
-         (filter (fn [[_ action]] (not= action "acc"))) ;; 2가지를 함수로 묶음 
-         (map (fn [[index action value]]
-                (let [actions (if (= action "jmp")
-                                (assoc sorted-actions index [index "nop" value])
-                                (assoc sorted-actions index [index "jmp" value]))]
-                  (calculate-acc-until-done-or-duplicated actions))))
+         generate-all-cases
+         (map calculate-acc-until-done-or-duplicated)
          (filter #(= (:index %) (- (count sorted-actions) 1)))
          first
          :acc)))
